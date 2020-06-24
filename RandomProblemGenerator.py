@@ -170,7 +170,34 @@ def RandomProblemGenerator(i):
 			print("c. $"+str(round(gananciaError1,cifras)))
 			print("d. $"+str(round(gananciaError2,cifras)))
 
+	elif i==5: 
+		#Moneda no justa: 3.81
+		lista = [0.05,0.1,0.4,0.8]
+		pos=rdm.randint(1,len(lista))			
+		p = lista[pos-1]
+		print("Title: Moneda con probabilidad de cara p="+str(p))
+		print("%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos))
+		print("Suponga que tiene una moneda no justa con una probabilidad de obtener cara de "+str(p)+". ¿Cuántas veces esperaría lanzar la moneda para obtener la primera cara?")
+		print(" ")
+		cantReal = 1.0/p
+		cantError1 = (1.0-p)/(p**2)
+		cantError2 = (1.0-p**2)/(p**2)
+		cantError3 = 1.0/(1-p**2)
+		cifras=0
+		if pos%2==0:
+			print("a. "+str(int(round(cantError1,cifras))))
+			print("*b. "+str(int(round(cantReal,cifras))))
+			print("c. "+str(int(round(cantError3,cifras))))
+			print("d. "+str(int(round(cantError2,cifras))))
 
+		else:
+			print("*a. "+str(int(round(cantReal,cifras))))
+			print("b. "+str(int(round(cantError2,cifras))))
+			print("c. "+str(int(round(cantError3,cifras))))
+			print("d. "+str(int(round(cantError1,cifras))))
+
+#TODO
+#Pedir en consola cantidad y rango (secciones) de los ejercicios a imprimir.
 
 #exercise=rdm.randint(1,2)
 RandomProblemGenerator(4)
