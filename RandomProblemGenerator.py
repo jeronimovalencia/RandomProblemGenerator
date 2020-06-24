@@ -200,7 +200,7 @@ def RandomProblemGenerator(i):
 #Pedir en consola cantidad y rango (secciones) de los ejercicios a imprimir.
 
 #exercise=rdm.randint(1,2)
-RandomProblemGenerator(4)
+RandomProblemGenerator(5)
 #lel
 
 
