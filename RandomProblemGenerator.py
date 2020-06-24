@@ -169,8 +169,12 @@ def RandomProblemGenerator(i):
 			print("b. $"+str(round(gananciaError3,cifras)))
 			print("c. $"+str(round(gananciaError1,cifras)))
 			print("d. $"+str(round(gananciaError2,cifras)))
-
+	
 	elif i==5: 
+		#Preferencia de marca: 3.79
+		lista = []	
+	
+	elif i==6: 
 		#Moneda no justa: 3.81
 		lista = [0.05,0.1,0.4,0.8]
 		pos=rdm.randint(1,len(lista))			
