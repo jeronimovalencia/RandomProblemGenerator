@@ -121,16 +121,19 @@ def RandomProblemGenerator(i):
 		lista=[10,12,14,16,18,20]
 		pos=rdm.randint(1,len(lista))				
 		cant=lista[pos-1]
-		print("Title: Examen de Opción Múltiple")
-		print("%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos))
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Examen de Opción Múltiple"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
 		numOpciones = rdm.randint(3,5)
 		parar=False
 		while parar==False:
 			cantRespuestas = rdm.randint(8,16)
 			if cantRespuestas < cant:
 				parar=True
-		print("un examen de opción múltiple tiene "+str(cant)+" preguntas, cada una con "+str(numOpciones)+" posibles respuestas, con una sola correcta. Suponga que un alumno contesta el examen con una adivinación aleatoria independiente en cada pregunta. ¿Cuál es la probabilidad de que conteste bien al menos "+str(cantRespuestas)+" preguntas correctamente?")
-		print(" ")
+		pregunta += "Un examen de opción múltiple tiene "+str(cant)+" preguntas, cada una con "+str(numOpciones)+" posibles respuestas, con una sola correcta. Suponga que un alumno contesta el examen con una adivinación aleatoria independiente en cada pregunta. ¿Cuál es la probabilidad de que conteste bien al menos "+str(cantRespuestas)+" preguntas correctamente?"+"\n"
 
 		pReal = 1 - binom.cdf(cantRespuestas-1, cant, 1/numOpciones)
 		pError1 = binom.cdf(cantRespuestas-1, cant, 1/numOpciones) 
@@ -140,16 +143,25 @@ def RandomProblemGenerator(i):
 		cifras=7
 
 		if pos%2==0:
-			print("*a. "+str(round(pReal,cifras)))
-			print("b. "+str(round(pError1,cifras)))
-			print("c. "+str(round(pError2,cifras)))
-			print("d. "+str(round(pError3,cifras)))
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
 
 		else:
-			print("a. "+str(round(pError3,cifras)))
-			print("b. "+str(round(pError1,cifras)))
-			print("*c. "+str(round(pReal,cifras)))
-			print("d. "+str(round(pError2,cifras)))
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
 
 	elif i==4:
 		#Ventas con devolución: 3.59
@@ -157,14 +169,18 @@ def RandomProblemGenerator(i):
 		pos=rdm.randint(1,len(lista))				
 		params=lista[pos-1]
 		cantProductos = params[0]
-		print("Title: Venta de "+str(params[1])+" con devolución")
-		print("%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos))
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Venta de "+str(params[1])+" con devolución"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
 		precio = rdm.randint(1,5)*100
 		dev = rdm.randint(10,20)/10
-		#Esto se puede variar for the lulz
+		#Esto podría variarse
 		p = 0.05
-		print(str(params[0])+" "+str(params[1])+" se van a vender en un almacen a $"+str(precio)+" cada uno. El almacen tiene una política de devolución de "+str(dev)+" veces el valor pagado en caso que el producto esté defectuoso. Uno de los "+str(params[1])+" tiene un defecto con probabilidad "+str(p)+". La ganancia neta esperada por el almacen tras vender todos los productos es")
-		print(" ")
+		pregunta += str(params[0])+" "+str(params[1])+" se van a vender en un almacen a \$"+str(precio)+" cada uno. El almacen tiene una política de devolución de "+str(dev)+" veces el valor pagado en caso que el producto esté defectuoso. Uno de los "+str(params[1])+" tiene un defecto con probabilidad "+str(p)+". La ganancia neta esperada por el almacen tras vender todos los productos es"+"\n"
+
 		gananciaReal = 0.0 
 		gananciaError1 = 0.0 
 		gananciaError2 = 0.0
@@ -179,16 +195,23 @@ def RandomProblemGenerator(i):
 		cifras=0
 
 		if pos%2==0:
-			print("a. $"+str(round(gananciaError1,cifras)))
-			print("b. $"+str(round(gananciaError2,cifras)))
-			print("c. $"+str(round(gananciaError3,cifras)))
-			print("*d. $"+str(round(gananciaReal,cifras)))
-
+			respuestas += "a. \$"+str(round(gananciaError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. \$"+str(round(gananciaError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. \$"+str(round(gananciaError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. \$"+str(round(gananciaReal,cifras))+"\n"
 		else:
-			print("*a. $"+str(round(gananciaReal,cifras)))
-			print("b. $"+str(round(gananciaError3,cifras)))
-			print("c. $"+str(round(gananciaError1,cifras)))
-			print("d. $"+str(round(gananciaError2,cifras)))
+			respuestas += "*a. \$"+str(round(gananciaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. \$"+str(round(gananciaError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. \$"+str(round(gananciaError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. \$"+str(round(gananciaError2,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
 	
 	elif i==5: 
 		#Preferencia de marca: 3.79
@@ -259,7 +282,7 @@ print(str3.replace(" ",""))
 #print("\maketitle")
 
 #TODO: Configurar esto con la entrada del TODO anterior
-list = [1,2,6]
+list = [1,2,3,4,6]
 str4 = "\ "+"begin{enumerate}[label=\ "+"arabic"+"*]"
 print(str4.replace(" ",""))
 
