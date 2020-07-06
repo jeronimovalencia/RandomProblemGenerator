@@ -1,6 +1,7 @@
 import numpy as np
 import random as rdm
 from scipy.stats import binom
+from scipy.special import binom as bin_coeff
 
 def RandomProblemGenerator(i):
 
@@ -117,12 +118,63 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas]
 
+	elif i==3:
+		#Ganancias diarias: 3.26
+		#[Cantidad 1 de clientes a llamar, cantidad 2 de clientes a llamar, Probab de llamar a cada grupo de clientes, probab de hacer una venta, precio venta]
+		lista=[[2,4,0.4,0.2,50000],[4,5,0.6,0.1,100000],[5,7,0.45,0.25,10000],[3,10,0.3,0.05,1000000]]
+		pos=rdm.randint(1,len(lista))				
+		params=lista[pos-1]
+		n1 = params[0]
+		n2 = params[1]
+		pCliente = params[2]
+		pVenta = params[3]
+		precioVenta = params[4]
+		stringPrecioVenta = "{:,}".format(precioVenta)
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Ganancias diarias"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta += "Un vendedor puede llamar a "+str(n1)+" o "+str(n2)+" clientes, con probabilidad "+str(pCliente)+" y "+str(1-pCliente)+" respectivamente. En cada llamada, hay una probabilidad de "+str(pVenta)+" de realizar una venta de \$"+stringPrecioVenta+". ¿Cuál es la ganancia diaria media de este vendedor?"+"\n"
 
+		gananciaPorLlamada = pVenta*precioVenta		
 
+		gananciaReal = (pCliente*n1+(1-pCliente)*n2)*gananciaPorLlamada
+		STRgananciaReal = "{:,}".format(int(gananciaReal))
+		gananciaError1 = (n1+n2)*gananciaPorLlamada
+		STRgananciaError1 = "{:,}".format(int(gananciaError1))
+		gananciaError2 = (n1+n2)*gananciaPorLlamada*pCliente
+		STRgananciaError2 = "{:,}".format(int(gananciaError2))
+		gananciaError3 = (n1+n2)*gananciaPorLlamada*(1-pCliente)
+		STRgananciaError3 = "{:,}".format(int(gananciaError3))
+
+		cifras = 2
+		
+		if pos%2==0:
+			respuestas += "a. \$"+STRgananciaError3+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. \$"+STRgananciaError1+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. \$"+STRgananciaError2+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. \$"+STRgananciaReal+"\n"
+
+		else:
+			respuestas += "a. \$"+STRgananciaError1+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. \$"+STRgananciaError2+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. \$"+STRgananciaReal+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. \$"+STRgananciaError3+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+		
 	#Seccion 3.4
 
-
-	elif i==3:
+	elif i==4:
 		#Examen Opcion Multiple : 3.41
 		lista=[10,12,14,16,18,20]
 		pos=rdm.randint(1,len(lista))				
@@ -169,7 +221,7 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 
 
-	elif i==4:
+	elif i==5:
 		#Ventas con devolución: 3.59
 		lista=[[5,"motores"],[7,"estéreos"],[9,"celulares"],[10,"teclados"]]
 		pos=rdm.randint(1,len(lista))				
@@ -223,7 +275,7 @@ def RandomProblemGenerator(i):
 	#Sección 3.5
 	
 
-	elif i==5: 
+	elif i==6: 
 		#Geométrica sin memoria: 3.72
 		lista = [0.1,0.2,0.3,0.4,0.5,0.6]
 		pos=rdm.randint(1,len(lista))				
@@ -267,7 +319,7 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 
 
-	elif i==6: 
+	elif i==7: 
 		#Preferencia de marca: 3.77
 		lista = ["par","impar"]	
 		pos=rdm.randint(1,len(lista))				
@@ -310,7 +362,7 @@ def RandomProblemGenerator(i):
 		
 		return [titulo, version, pregunta, respuestas]
 	
-	elif i==7: 
+	elif i==8: 
 		#Moneda no justa: 3.81
 		lista = [0.05,0.1,0.4,0.8]
 		pos=rdm.randint(1,len(lista))			
@@ -348,10 +400,101 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas]
 
+
 	#Sección 3.6
 
-	elif i==8:
-		#
+
+	elif i==9:
+		#Artículos defectuosos: 3.92
+		#[Porcentaje de falla, nombre artículo, número de articulo defectuoso, texto anterior ,número de intento, texto anterior] con numDefecto < numIntentos 
+		lista = [[5,"pantalla",2,"segunda",3,"tercero"],[10,"vela",1,"primera",3,"tercero"],[2,"computadora",2,"segunda",5,"quinto"],[7,"silla",3,"tercera",4,"cuarto"],[8,"estufa",1,"primera",5,"quinto"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pFallo = params[0]/100
+		articulo = params[1]
+		numNoDefectos = params[2]
+		numIntentos = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Errores de producción de "+articulo+"s"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += str(params[0])+" por ciento de las "+articulo+"s fabricadas por una empresa son defectuosas. Si estos artículos se prueban al azar uno a la vez, ¿cuál es la probabilidad de que la "+params[3]+" "+articulo+" no defectuosa sea hallada en el "+params[5]+" intento?"+"\n"
+
+		p = pFallo
+		q = 1-p
+		pReal = bin_coeff(numIntentos-1,numNoDefectos-1)*q**numNoDefectos*p**(numIntentos-numNoDefectos)
+		pError1 = bin_coeff(numIntentos-1,numNoDefectos-1)*p**numNoDefectos*q**(numIntentos-numNoDefectos)
+		pError2 = bin_coeff(numIntentos,numNoDefectos)*p**numNoDefectos*q**(numIntentos-numNoDefectos)
+		pError3 = bin_coeff(numIntentos,numNoDefectos)*q**numNoDefectos*p**(numIntentos-numNoDefectos)
+
+		cifras=7
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==10:
+		#Cantidad media de tréboles: 3.97
+		
+		lista = [[0.1,6],[0.2,5],[0.05,4],[0.15,7]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		p = params[0]
+		cant = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Encontrar tréboles de 4 hojas"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "En un cierto prado, la probabilidad de encontrar un trébol de cuatro hojas es "+str(p)+". ¿Cuántos tréboles deberían buscarse para hallar "+str(cant)+" de cuatro hojas?"+"\n"
+
+		cantReal = cant/p
+		cantError1 = 1/p 
+		cantError2 = cant/p**2
+		cantError3 = 100*p/cant
+
+		cifras=0
+		if pos%2==0:
+			respuestas += "a. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "d. "+str(int(round(cantError1,cifras)))+"\n"
+
+		else:
+			respuestas += "a. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError2,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 	
+
 
 #TODO
 #Pedir en consola cantidad y rango (secciones) de los ejercicios a imprimir.
@@ -381,7 +524,7 @@ print(str3.replace(" ",""))
 
 #TODO: Configurar esto con la entrada del TODO anterior
 
-ejercicios = [5,6]
+ejercicios = [3,9]
 
 str4 = "\ "+"begin{enumerate}[label=\ "+"arabic"+"*]"
 print(str4.replace(" ",""))
