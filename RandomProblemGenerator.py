@@ -3,7 +3,11 @@ import random as rdm
 from scipy.stats import binom
 
 def RandomProblemGenerator(i):
+
+
 	#Seccion 3.3
+
+
 	if i==1:
 		#Dados: 3.22
 		pos=rdm.randint(1,6)
@@ -116,6 +120,8 @@ def RandomProblemGenerator(i):
 
 
 	#Seccion 3.4
+
+
 	elif i==3:
 		#Examen Opcion Multiple : 3.41
 		lista=[10,12,14,16,18,20]
@@ -213,11 +219,98 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas]
 	
-	elif i==5: 
-		#Preferencia de marca: 3.79
-		lista = []	
+
+	#Sección 3.5
 	
+
+	elif i==5: 
+		#Geométrica sin memoria: 3.72
+		lista = [0.1,0.2,0.3,0.4,0.5,0.6]
+		pos=rdm.randint(1,len(lista))				
+		p=lista[pos-1]	
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Moneda no justa"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+		cant1 = rdm.randint(10,100)
+		cant2 = rdm.randint(2,5)
+		
+		pregunta += "Suponga que se tiene una moneda con probabilidad de obtener cara de "+str(p)+". Si ésta se lanza "+str(cant1)+" veces y no se obtiene cara, ¿cuál es la probabilidad de que al lanzarla al menos "+str(cant2)+" veces más se obtenga la primera cara?"+"\n"
+
+		pReal = (1-p)**(cant2-1)
+		pError1 = p**(cant2)	
+		pError2 = (1-p**cant2)
+		pError3 = (1-p)**cant2
+
+		cifras=4
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+
 	elif i==6: 
+		#Preferencia de marca: 3.77
+		lista = ["par","impar"]	
+		pos=rdm.randint(1,len(lista))				
+		paridad=lista[pos-1]	
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Probabilidad total geométrica"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta+="Sea X una variable aleatoria con distribución de probabilidad geométrica con probabilidad de éxito $p$. La probabilidad que X sea cualquier número "+paridad+" es (acá, $q=1-p$)"+"\n"
+
+		pPar = "$\ "+"frac{p}{q-q^3}$" 
+		pPar = pPar.replace(" ","")
+		pImpar = "$\ "+"frac{p}{1-q^2}$"
+		pImpar = pImpar.replace(" ","")
+		pError1 = "$\ "+"frac{q}{1-p}$"
+		pError1 = pError1.replace(" ","")
+		pError2 = "$\ "+"frac{q}{1-p^2}$"
+		pError2 = pError2.replace(" ","")
+		
+		if pos%2==0:
+			respuestas += "a. "+pPar+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+pImpar+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+pError1+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+pError2+"\n"
+
+		else:
+			respuestas += "*a. "+pPar+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+pImpar+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+pError1+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+pError2+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+	
+	elif i==7: 
 		#Moneda no justa: 3.81
 		lista = [0.05,0.1,0.4,0.8]
 		pos=rdm.randint(1,len(lista))			
@@ -255,6 +348,11 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas]
 
+	#Sección 3.6
+
+	elif i==8:
+		#
+
 #TODO
 #Pedir en consola cantidad y rango (secciones) de los ejercicios a imprimir.
 
@@ -265,7 +363,7 @@ print("\documentclass{article}")
 
 str0 = "\ "+"usepackage[utf8]{inputenc}"
 print(str0.replace(" ", ""))
-str01 = "\ "+"usepackage{enumitem}"
+str01 = "\ "+"usepackage{enumitem,amsmath}"
 print(str01.replace(" ", ""))
 
 #Encabezado
@@ -282,11 +380,13 @@ print(str3.replace(" ",""))
 #print("\maketitle")
 
 #TODO: Configurar esto con la entrada del TODO anterior
-list = [1,2,3,4,6]
+
+ejercicios = [5,6]
+
 str4 = "\ "+"begin{enumerate}[label=\ "+"arabic"+"*]"
 print(str4.replace(" ",""))
 
-for i in list: 
+for i in ejercicios: 
 	data = RandomProblemGenerator(i)
 	#Titulo y version del problema
 	#print(data[0])
