@@ -1,5 +1,6 @@
 import numpy as np
 import random as rdm
+import math
 from scipy.stats import binom
 from scipy.special import binom as bin_coeff
 
@@ -150,8 +151,6 @@ def RandomProblemGenerator(i):
 		gananciaError3 = (n1+n2)*gananciaPorLlamada*(1-pCliente)
 		STRgananciaError3 = "{:,}".format(int(gananciaError3))
 
-		cifras = 2
-		
 		if pos%2==0:
 			respuestas += "a. \$"+STRgananciaError3+"\n"
 			respuestas += " "+"\n"
@@ -495,6 +494,228 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas] 	
 
+	
+	#Sección 3.7
+
+	
+	elif i==11: 
+		#Canicas de colores: 3.102
+		#[Número total de canicas, num canicas amarillas, num canicas azules, cantidad sacadas, cantidad deseada azul]
+		lista = [[10,2,4,5,2],[15,5,5,6,3],[15,8,4,4,4],[20,10,5,10,3]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		numTotalCanicas = params[0]
+		numCanicasA = params[1]
+		numCanicasZ = params[2]
+		numCanicasR = numTotalCanicas - numCanicasA - numCanicasZ
+		cantSacadas = params[3]
+		cantDeseadaZ = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Canicas de colores"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Suponga que en una bolsa hay "+str(numTotalCanicas)+" canicas de las cuales "+str(numCanicasA)+" son amarillas, "+str(numCanicasZ)+" son azules y "+str(numCanicasR)+" son rojas. Si se sacan "+str(cantSacadas)+" canicas al azar sin reemplazo, ¿cuál es la probabilidad que "+str(cantDeseadaZ)+ " sean azules?"+"\n"
+
+		pReal = bin_coeff(numCanicasZ,cantDeseadaZ)*bin_coeff(numTotalCanicas-numCanicasZ,cantSacadas-cantDeseadaZ)/bin_coeff(numTotalCanicas,cantSacadas)
+		pError1 = 1/bin_coeff(numTotalCanicas,cantDeseadaZ)
+		pError2 = bin_coeff(numCanicasZ,cantDeseadaZ)*bin_coeff(numTotalCanicas-numCanicasZ,cantSacadas)/bin_coeff(numTotalCanicas,cantSacadas)
+		pError3 =  1/bin_coeff(numCanicasZ,cantDeseadaZ)
+		
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	
+	elif i==12:
+		#Flores blancas y rojas : 3.114
+		#[Tamaño ramo, cantidad total flores, cantidad flores rojas del total]
+		lista = [[10,100,50],[25,200,150],[15,150,60],[20,300,175],[30,200,120]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		tamRamo = params[0]
+		cantTotalFlores = params[1]
+		numFloresR = params[2]
+		numFloresB = cantTotalFlores-numFloresR
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Ramos de flores"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Un ramo de "+str(tamRamo)+" flores se va a crear a partir de un lote con "+str(numFloresB)+" flores blancas y "+str(numFloresR)+" flores rojas. ¿Cuántas flores "+"blancas"+" esperaría ver en el ramo completo?"+"\n"
+
+		cantReal = tamRamo*numFloresB/cantTotalFlores 
+		cantError1 = tamRamo*numFloresR/cantTotalFlores
+		cantError2 = numFloresB/tamRamo
+		cantError3 = (tamRamo*numFloresB/cantTotalFlores)*((cantTotalFlores-numFloresB)/cantTotalFlores)
+
+		cifras=0
+		if pos%2==0:
+			respuestas += "*a. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "d. "+str(int(round(cantError1,cifras)))+"\n"
+
+		else:
+			respuestas += "*a. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError3,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 
+
+	elif i==13:
+		#Costo de reparación: 3.106
+		#[Nombre artículo, cantidad total articulos, cantidad articulos defectuosos, costo reparación, tamaño del muestreo]
+		lista = [["celulares",100,15,100000,10], ["computadores",20,5,150000,5], ["esferos",200,25,10000,16], ["pantalones",50,12,20000,8]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		articulos = params[0]
+		cantTotalArticulos = params[1]
+		cantArticulosDefectuosos = params[2]
+		costoReparacionPorArticulo = params[3]
+		STRcostoReparacionPorArticulo = "{:,}".format(costoReparacionPorArticulo)
+		tamMuestra = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Costo medio de reparación"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "En una bodega hay "+str(cantTotalArticulos)+" "+articulos+" de los cuales "+str(cantArticulosDefectuosos)+" están defectuosos. El costo de reparar un artículo defectuoso es de \$"+ STRcostoReparacionPorArticulo +". Si se seleccionan "+ str(tamMuestra) +" artículos al azar para formar un lote, ¿cuál es el costo medio de la reparación de este lote?"+"\n"
+		
+		costoReal = (tamMuestra*cantArticulosDefectuosos/cantTotalArticulos)*costoReparacionPorArticulo
+		STRcostoReal = "{:,}".format(int(costoReal))
+		costoError1 = (tamMuestra/cantTotalArticulos)*costoReparacionPorArticulo
+		STRcostoError1 = "{:,}".format(int(costoError1))
+		costoError2 = (cantArticulosDefectuosos/cantTotalArticulos)*costoReparacionPorArticulo
+		STRcostoError2 = "{:,}".format(int(costoError2))
+		costoError3 = tamMuestra*costoReparacionPorArticulo
+		STRcostoError3 = "{:,}".format(int(costoError3))
+
+		if pos%2==0:
+			respuestas += "a. \$"+STRcostoError3+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. \$"+STRcostoError1+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. \$"+STRcostoError2+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. \$"+STRcostoReal+"\n"
+
+		else:
+			respuestas += "a. \$"+STRcostoError1+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. \$"+STRcostoError2+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. \$"+STRcostoReal+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. \$"+STRcostoError3+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==14:
+		#Tamaño de muestra : 3.106
+		#[Articulo, cantidad total, cantidad defectuosos,probabilidad de AL MENOS 1 defectuoso]
+		lista = [["celulares",100,15,0.8], ["computadores",40,10,0.9], ["esferos",200,25,0.95], ["pantalones",50,12,0.85]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		articulos = params[0]
+		cantTotalArticulos = params[1]
+		cantArticulosDefectuosos = params[2]
+		probabilidadAlMenosUnDefecto = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Tamaño de muestra para detectar defectos"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta += "Una caja con "+str(cantTotalArticulos) +" " + articulos+" contiene "+str(cantArticulosDefectuosos)+ " defectuosos. ¿Cuál debe ser el tamaño de la muestra de artículos de la caja para que la probabilidad de que haya al menos uno defectuoso sea mayor o igual a "+str(probabilidadAlMenosUnDefecto)+"?"+"\n"
+
+		parar = False
+		cont = 0
+		while parar == False :
+			cont += 1
+			#Probabilidad de cero defectos			
+			prob = bin_coeff(cantArticulosDefectuosos,0)*bin_coeff(cantTotalArticulos-cantArticulosDefectuosos,cont-0)/bin_coeff(cantTotalArticulos,cont)
+			if 1-prob >= probabilidadAlMenosUnDefecto:
+				parar = True
+
+		cantReal = cont
+			 
+		parar = False
+		cont = 0
+		while parar == False :
+			cont += 1			
+			probError1 = bin_coeff(cantArticulosDefectuosos,1)*bin_coeff(cantTotalArticulos-cantArticulosDefectuosos,cont-1)/bin_coeff(cantTotalArticulos,cont)
+			prob = bin_coeff(cantArticulosDefectuosos,0)*bin_coeff(cantTotalArticulos-cantArticulosDefectuosos,cont-0)/bin_coeff(cantTotalArticulos,cont)
+			if 1-probError1 -prob >= probabilidadAlMenosUnDefecto:
+				parar = True		
+
+		cantError1 = cont
+	
+		cantError2 = int(cantReal*4/3)
+
+		parar = False
+		cont = 0
+		while parar == False :
+			cont += 1			
+			probError3 = bin_coeff(cantArticulosDefectuosos,1)*bin_coeff(cantTotalArticulos-cantArticulosDefectuosos,cont-1)/bin_coeff(cantTotalArticulos,cont)
+			if probError3 > 1-probabilidadAlMenosUnDefecto/1.5:
+				parar = True
+
+		cantError3 = cont
+			
+		cifras=0
+		if pos%2==0:
+			respuestas += "a. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "*d. "+str(int(round(cantReal,cifras)))+"\n"
+
+		else:
+			respuestas += "*a. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError3,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 
+
 
 #TODO
 #Pedir en consola cantidad y rango (secciones) de los ejercicios a imprimir.
@@ -524,7 +745,7 @@ print(str3.replace(" ",""))
 
 #TODO: Configurar esto con la entrada del TODO anterior
 
-ejercicios = [3,9]
+ejercicios = [14]
 
 str4 = "\ "+"begin{enumerate}[label=\ "+"arabic"+"*]"
 print(str4.replace(" ",""))
