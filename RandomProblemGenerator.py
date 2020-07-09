@@ -2,6 +2,9 @@ import numpy as np
 import random as rdm
 import math
 from scipy.stats import binom
+from scipy.stats import geom
+from scipy.stats import poisson
+
 from scipy.special import binom as bin_coeff
 
 def RandomProblemGenerator(i):
@@ -362,6 +365,52 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 	
 	elif i==8: 
+		#Preferencia de marca : 3.78
+		#[probabilidad de preferencia, tipo de artículo, cantidad minima de personas que se quieren con la preferencia]		
+		lista = [[70,"chocolates",5],[80,"cervezas",6],[90,"galletas",5],[85,"dulces",4]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pPreferencia = params[0]/100
+		articulo = params[1]
+		cantMinimaPersonas = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Title: Encuesta de preferencia de marca"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "De una ciudad, se sabe que el "+str(params[0])+"\% de la población prefieren una cierta marca de "+articulo+". Si se hace una encuesta con ciudadanos al azar, ¿cuál es la probabilidad que al menos "+str(cantMinimaPersonas)+" personas deban ser entrevistadas para que se encuentre la primera persona con la preferencia de tal marca?"+"\n"
+
+		pReal = 1- geom.cdf(cantMinimaPersonas-1,pPreferencia)
+		pError1 = 1- geom.cdf(cantMinimaPersonas,pPreferencia)
+		pError2 = geom.cdf(cantMinimaPersonas-1,pPreferencia)
+		pError3 = geom.pmf(cantMinimaPersonas,pPreferencia)
+
+		cifras=7
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	
+	elif i==9: 
 		#Moneda no justa: 3.81
 		lista = [0.05,0.1,0.4,0.8]
 		pos=rdm.randint(1,len(lista))			
@@ -403,7 +452,7 @@ def RandomProblemGenerator(i):
 	#Sección 3.6
 
 
-	elif i==9:
+	elif i==10:
 		#Artículos defectuosos: 3.92
 		#[Porcentaje de falla, nombre artículo, número de articulo defectuoso, texto anterior ,número de intento, texto anterior] con numDefecto < numIntentos 
 		lista = [[5,"pantalla",2,"segunda",3,"tercero"],[10,"vela",1,"primera",3,"tercero"],[2,"computadora",2,"segunda",5,"quinto"],[7,"silla",3,"tercera",4,"cuarto"],[8,"estufa",1,"primera",5,"quinto"]]
@@ -451,7 +500,7 @@ def RandomProblemGenerator(i):
 		
 		return [titulo, version, pregunta, respuestas]
 
-	elif i==10:
+	elif i==11:
 		#Cantidad media de tréboles: 3.97
 		
 		lista = [[0.1,6],[0.2,5],[0.05,4],[0.15,7]]
@@ -494,11 +543,11 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas] 	
 
-	
+			
 	#Sección 3.7
 
 	
-	elif i==11: 
+	elif i==12: 
 		#Canicas de colores: 3.102
 		#[Número total de canicas, num canicas amarillas, num canicas azules, cantidad sacadas, cantidad deseada azul]
 		lista = [[10,2,4,5,2],[15,5,5,6,3],[15,8,4,4,4],[20,10,5,10,3]]
@@ -547,7 +596,7 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 
 	
-	elif i==12:
+	elif i==13:
 		#Flores blancas y rojas : 3.114
 		#[Tamaño ramo, cantidad total flores, cantidad flores rojas del total]
 		lista = [[10,100,50],[25,200,150],[15,150,60],[20,300,175],[30,200,120]]
@@ -592,7 +641,7 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas] 
 
-	elif i==13:
+	elif i==14:
 		#Costo de reparación: 3.106
 		#[Nombre artículo, cantidad total articulos, cantidad articulos defectuosos, costo reparación, tamaño del muestreo]
 		lista = [["celulares",100,15,100000,10], ["computadores",20,5,150000,5], ["esferos",200,25,10000,16], ["pantalones",50,12,20000,8]]
@@ -642,7 +691,7 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas]
 
-	elif i==14:
+	elif i==15:
 		#Tamaño de muestra : 3.106
 		#[Articulo, cantidad total, cantidad defectuosos,probabilidad de AL MENOS 1 defectuoso]
 		lista = [["celulares",100,15,0.8], ["computadores",40,10,0.9], ["esferos",200,25,0.95], ["pantalones",50,12,0.85]]
@@ -717,9 +766,58 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas] 
 
 
-#TODO
-#Pedir en consola cantidad y rango (secciones) de los ejercicios a imprimir.
+	#Sección 3.8
 
+
+	elif i==16 : 
+		#Clientes en una tienda : 3.122
+		#[Tienda de, promedio por hora, cantidad limite]
+		lista = [["mascotas",5,3],["juguetes",6,5],["ropa",7,6],["cobijas",4,3],["pijamas",5,7]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		articulos = params[0]
+		promedioPorHora = params[1]
+		cantLimitePersonas = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Clientes en una tienda"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "A una tienda de "+articulos+" llegan, de acuerdo a un proceso de Poisson, en promedio "+str(promedioPorHora)+" clientes por hora. Durante una hora cualquiera, ¿cuál es la probabilidad de que lleguen a lo sumo "+str(cantLimitePersonas)+ " clientes?"+"\n"
+
+		pReal = poisson.cdf(cantLimitePersonas,promedioPorHora)
+		pError1 = 1-poisson.cdf(cantLimitePersonas,promedioPorHora)
+		pError2 = poisson.pmf(cantLimitePersonas,promedioPorHora)
+		pError3 = poisson.cdf(cantLimitePersonas-1,promedioPorHora)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+		
+
+
+#TODO
+#Importar un .txt que cargue las secciones de las cuales se quieren los ejercicios
 
 #Escribir documento en .tex
 
@@ -745,7 +843,7 @@ print(str3.replace(" ",""))
 
 #TODO: Configurar esto con la entrada del TODO anterior
 
-ejercicios = [14]
+ejercicios = [8,16]
 
 str4 = "\ "+"begin{enumerate}[label=\ "+"arabic"+"*]"
 print(str4.replace(" ",""))
