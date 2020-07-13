@@ -34,7 +34,6 @@ def RandomProblemGenerator(i):
 		for i in range(1,cant+1 ):
 			sigmaReal+=(i*1.0-muReal)**2/cant
 			sigmaError+=(i*1.0)**2/cant
-		print(" ")
 		if pos%2==0:
 			respuestas += "a. El valor esperado es "+str(round(muReal,2))+" y la varianza es "+str(round(sigmaError,2))+"\n"
 			respuestas += " "+"\n"
@@ -997,6 +996,216 @@ def RandomProblemGenerator(i):
 		
 		return [titulo, version, pregunta, respuestas]
 
+
+	#DeGroot & Schervish
+
+	#Section 5.2
+
+	elif i==21:
+		#Más caras que sellos: 5.2.3
+		#[probabilidad cara, cantidad de tiros]
+		lista = [[0.5,7],[0.4,8],[0.6,10],[0.7,7],[0.3,8],[0.8,9]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pCara = params[0]
+		cantTiros = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Más caras que sellos"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Una moneda con probabilidad de cara "+str(pCara)+" se lanza "+str(cantTiros)+" veces. ¿Cuál es la probabilidad de que salgan más caras que sellos?"+"\n"
+
+		pReal = 0
+		pError1 = 0
+		pError2 = 0
+		pError3 = 0
+	
+		for n in range(int(cantTiros/2.0)+1,cantTiros+1):
+			pReal += binom.pmf(n,cantTiros,pCara)
+		
+		pError1 += binom.pmf(int(cantTiros/2.0),cantTiros,pCara)
+	
+		for n in range(int(cantTiros/2.0)+1,cantTiros+1):
+			pError2 += binom.pmf(n,cantTiros,1-pCara)			
+
+		pError3 = binom.cdf(int(cantTiros/2)+1,cantTiros-1,pCara)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+		
+	elif i==22:
+		#Disparos : 5.2.6
+		#[Prob. acierto 1, Cantidad tiros 1, Prob. acierto 2, Cantidad tiros 2, Prob. acierto 3, Cantidad tiros 3]
+		lista = [[0.3,10,0.4,5,0.6,3],[0.5,10,0.6,2,0.9,10],[0.6,4,0.3,10,0.7,2],[0.6,6,0.6,2,0.3,10]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pAcierto1 = params[0]
+		cantTiros1 = params[1]
+		pAcierto2 = params[2]
+		cantTiros2 = params[3]
+		pAcierto3 = params[4]
+		cantTiros3 = params[5]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Disparos con probabilidad"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Tres personas van a disparar a un onjetivo. La primera persona disparará "+str(cantTiros1)+" veces y tiene probabilidad de acertar de "+str(pAcierto1)+". La segunda lo hará "+str(cantTiros2)+" veces y tiene probabilidad de acierto de "+str(pAcierto2)+"; y la tercera "+str(cantTiros3)+" veces y tiene probabilidad de dar en el blanco de "+str(pAcierto3)+". ¿Cuál es el valor esperado y la varianza del número de disparos que dan en el blanco? (Asuma que los disparos son independientes)"+"\n"
+
+		muReal = pAcierto1*cantTiros1+pAcierto2*cantTiros2+pAcierto3*cantTiros3
+		sigmaReal = pAcierto1*cantTiros1*(1-pAcierto1)+pAcierto2*cantTiros2*(1-pAcierto2)+pAcierto3*cantTiros3*(1-pAcierto3)
+		muError = (pAcierto1+pAcierto2+pAcierto3)*(cantTiros1+cantTiros2+cantTiros3)
+		sigmaError = pAcierto1*cantTiros1*(pAcierto1)+pAcierto2*cantTiros2*(pAcierto2)+pAcierto3*cantTiros3*(pAcierto3)
+			
+		cifras = 3
+		if pos%2==0:
+			respuestas += "a. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		elif pos%2==1:
+			respuestas += "a. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="b. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+
+	elif i==23:
+		#Probabilidad condicional : 5.2.8
+		#[Probabilidad de falla, cantidad 1, cantidad 2, Cantidad total de componentes] con cant1 < cant2
+		lista = [[0.1,2,3,10],[0.15,2,4,15],[0.2,3,4,12],[0.2,2,4,8],[0.3,2,3,10]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pFalla = params[0]
+		cant1 = params[1]
+		cant2 = params[2]
+		cantTotalComponentes = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Fallo de componentes"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Un componente de un circuito falla con probabilidad "+str(pFalla)+". Si en total se tienen "+str(cantTotalComponentes)+" componentes independientes en un circuito en el cual se sabe que al menos "+str(cant1)+" han fallado, ¿cuál es la probabilidad de que fallen al menos "+str(cant2)+" en todo el circuito?"+"\n"
+
+		pReal = (1-binom.cdf(cant2-1,cantTotalComponentes,pFalla))/(1-binom.cdf(cant1-1,cantTotalComponentes,pFalla)) 
+		pError1 = binom.cdf(cant2-1,cantTotalComponentes,pFalla)
+		pError2 = (1-binom.cdf(cant2,cantTotalComponentes,pFalla))/(1-binom.cdf(cant1,cantTotalComponentes,pFalla))
+		pError3 = (1-binom.cdf(cant2-1,cantTotalComponentes,pFalla))
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==24:
+		#Pacientes : 5.2.13		
+		#[Probabilidad de recuperación 1, probabilidad de recuperación 2, cantidad de pacientes grupo 1, cantidad pacientes grupo 2]
+		lista = [[0.4,0.3,4,3],[0.5,0.6,3,4],[0.4,0.7,3,5],[0.6,0.3,4,3],[0.5,0.2,3,4],[0.4,0.3,2,5]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pRec1 = params[0]
+		pRec2 = params[1]
+		cantPacientes1 = params[2]
+		cantPacientes2 = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Recuperación de pacientes"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "En un ensayo clínico hay dos grupos independientes de pacientes. En el grupo 1 hay una probabilidad de recuperación de "+str(pRec1)+" y en el grupo 2 una de "+str(pRec2)+". Si el grupo 1 consta de "+str(cantPacientes1)+" y el grupo 2 de "+str(cantPacientes2)+", ¿cuál es la probabilidad de que en el grupo 1 se recuperen más pacientes que en el grupo 2?"+"\n"
+
+		pReal = 0
+		pError3 = 0
+
+		for i in range(0,cantPacientes1+1):
+			for j in range(0,cantPacientes2+1):
+				if i>j: 
+					pReal += binom.pmf(i,cantPacientes1,pRec1)*binom.pmf(i,cantPacientes2,pRec2)
+
+		for i in range(1,cantPacientes1):
+			for j in range(1,cantPacientes2):
+				if i>j: 
+					pError3 += binom.pmf(i,cantPacientes1,pRec1)*binom.pmf(i,cantPacientes2,pRec2)
+
+		pError1 = binom.pmf(cantPacientes1,cantPacientes1,pRec1)*binom.pmf(cantPacientes2,cantPacientes2,pRec2)
+		pError2 = binom.cdf(int(cantPacientes1/2),cantPacientes1,pRec1)*binom.cdf(int(cantPacientes2/2),cantPacientes2,pRec2)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]		
 		
 ##############################################################################################################################
 
@@ -1014,11 +1223,11 @@ def RandomProblemGenerator(i):
 #Sección 3.7 (Distribución hipergeométrica) : 13-16
 #Sección 3.8 (Distribución de Poisson) : 17-20
 
-#De Groot?
+#DeGroot & Schervish - Probability and Statistics 
 
+#Section 5.2 (Bernoulli and binomial distribution): 21-24
 
-ejercicios = [18]
-
+ejercicios = [21,22,23,24]
 
 
 #Escribir documento en .tex
