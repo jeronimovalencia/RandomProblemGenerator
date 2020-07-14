@@ -3,6 +3,7 @@ import random as rdm
 import math
 from scipy.stats import binom
 from scipy.stats import geom
+from scipy.stats import hypergeom
 from scipy.stats import poisson
 from scipy.special import binom as bin_coeff
 
@@ -1205,12 +1206,149 @@ def RandomProblemGenerator(i):
 			respuestas += " "+"\n"
 			respuestas += "d. "+str(round(pError2,cifras))+"\n"
 		
-		return [titulo, version, pregunta, respuestas]		
-		
-##############################################################################################################################
+		return [titulo, version, pregunta, respuestas]	
 
-#TODO
-#Importar un .txt que cargue las secciones de las cuales se quieren los ejercicios
+		
+	 #Section 5.3
+
+	elif i==25: 
+		#Pelotas de colores: 5.3.2
+		#[Cantidad pelotas azules, cantidad pelotas rojas, cantidad muestra, cantidad limite, color pregunta]
+		lista = [[5,5,7,3,"azules"],[4,6,6,3,"rojas"],[7,11,7,4,"azules"],[8,6,5,3,"rojas"],[8,4,6,4,"azules"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		cantAzul = params[0]
+		cantRoja = params[1]
+		cantMuestra = params[2]
+		cantLim = params[3]
+		STRcolor = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Pelotas de colores"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+		
+		pregunta += "En una caja hay "+str(cantAzul)+" pelotas azules y "+str(cantRoja)+" pelotas rojas. Si se sacan "+str(cantMuestra)+" pelotas de la caja sin reemplazo, ¿cuál es la probabilidad de que salgan al menos "+str(cantLim)+" pelotas "+STRcolor+"?"+"\n"
+	
+		pRealAzul = 1-hypergeom.cdf(cantLim-1,cantAzul+cantRoja,cantAzul,cantMuestra)
+		pRealRoja = 1-hypergeom.cdf(cantLim-1,cantAzul+cantRoja,cantRoja,cantMuestra)
+		pError1 = 1-hypergeom.cdf(cantLim,cantRoja+cantAzul,cantAzul,cantMuestra)
+		pError2 = 1-hypergeom.cdf(cantLim,cantAzul+cantRoja,cantRoja,cantMuestra)
+		
+		cifras=5
+
+		if STRcolor == "rojas": 
+			if pos%2==0:
+				respuestas += "a. "+str(round(pError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(pError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(pRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*d. "+str(round(pRealRoja,cifras))+"\n"
+
+			else:
+				respuestas += "a. "+str(round(pRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(pError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*c. "+str(round(pRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else: 
+			if pos%2==0:
+				respuestas += "a. "+str(round(pError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(pError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*c. "+str(round(pRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(pRealRoja,cifras))+"\n"
+
+			else:
+				respuestas += "*a. "+str(round(pRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(pError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(pRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(pError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]	
+
+	elif i==26:
+		#Proporción en muestra: 5.3.3
+		#[Cantidad esferos rojos, cantidad esferos negro, tamaño muestra, texto pregunta]
+		lista = [[16,14,10,"negros"],[20,10,15,"rojos"],[24,18,12,"negros"],[10,16,9,"rojos"],[7,23,13,"negros"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		cantRojos = params[0]
+		cantNegros = params[1]
+		cantMuestra = params[2]
+		STRcolor = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Esferos de colores"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+		
+
+		pregunta += "En una bolsa se tienen "+str(cantRojos)+" esferos rojos y "+str(cantNegros)+" esferos negros. Si se sacan sin reemplazo un total de "+str(cantMuestra)+" esferos y $P$ denota la proporción de esferos "+STRcolor+" en tal muestra, ¿cuáles son el valor esperado y la varianza de $P$?"+"\n"
+
+		muRealNegro = (1.0/cantMuestra)*(cantMuestra*cantNegros/(cantNegros+cantRojos))	
+		muErrorNegro = (cantMuestra*cantNegros/(cantNegros+cantRojos))
+		muRealRojo = (1.0/cantMuestra)*(cantMuestra*cantRojos/(cantNegros+cantRojos))
+		muErrorRojo = (cantMuestra*cantRojos/(cantNegros+cantRojos))
+		sigmaReal = (1.0/cantMuestra**2)*(cantMuestra*cantRojos*cantNegros/(cantRojos+cantNegros)**2)*((cantRojos+cantNegros-cantMuestra)/(cantRojos+cantNegros-1))
+		sigmaError = (cantMuestra*cantRojos*cantNegros/(cantRojos+cantNegros)**2)*((cantRojos+cantNegros-cantMuestra)/(cantRojos+cantNegros-1))
+		
+		if STRcolor == "rojos":
+			cifras = 3
+			if pos%2==0:
+				respuestas += "a. El valor esperado es "+str(round(muErrorRojo,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*b. El valor esperado es "+str(round(muRealRojo,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. El valor esperado es "+str(round(muRealRojo,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. El valor esperado es "+str(round(muErrorRojo,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+			elif pos%2==1:
+				respuestas += "a. El valor esperado es "+str(round(muErrorRojo,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas +="b. El valor esperado es "+str(round(muErrorRojo,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas +="c. El valor esperado es "+str(round(muRealRojo,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*d. El valor esperado es "+str(round(muRealRojo,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		else:
+			cifras = 3
+			if pos%2==0:
+				respuestas += "a. El valor esperado es "+str(round(muRealNegro,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. El valor esperado es "+str(round(muErrorNegro,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. El valor esperado es "+str(round(muErrorNegro,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*d. El valor esperado es "+str(round(muRealNegro,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+			elif pos%2==1:
+				respuestas += "a. El valor esperado es "+str(round(muErrorNegro,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas +="b. El valor esperado es "+str(round(muErrorNegro,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas +="c. El valor esperado es "+str(round(muRealNegro,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*d. El valor esperado es "+str(round(muRealNegro,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+
+##############################################################################################################################
 
 #Seleccionar los ejercicios a imprimir en el documento .docx según la siguiente lista: 
 
@@ -1226,8 +1364,10 @@ def RandomProblemGenerator(i):
 #DeGroot & Schervish - Probability and Statistics 
 
 #Section 5.2 (Bernoulli and binomial distribution): 21-24
+#Section 5.3 (Hypergeometric distribution): 25-26
+#Section 5.4 (Poisson distribution) : TODO
 
-ejercicios = [21,22,23,24]
+ejercicios = [26]
 
 
 #Escribir documento en .tex
