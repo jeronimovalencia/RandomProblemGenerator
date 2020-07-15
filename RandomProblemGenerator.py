@@ -1348,6 +1348,103 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 
 
+	
+	#Section 5.4
+
+
+	elif i==27: 
+		#Imperfectos en una tela : 5.4.6
+		#[Promedio errores por unidad de longitud, unidad de longitud (metros), longitud tela final (metros), cantidad máxima de errores, texto: error/errores]
+		lista = [[2,10,15,2,"errores"],[4,20,15,2,"errores"],[3,20,18,1,"error"],[5,50,10,1,"error"],[8,10,12,2,"errores"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		promErrores = params[0]
+		unidadLongitud = params[1]
+		longitudMuestra = params[2]
+		cantMaximaErrores = params[3]
+		STRerror = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Imperfectos en una tela"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"		
+
+		pregunta += "Una empresa textil posee una máquina que causa, en promedio, "+str(promErrores)+" imperfecciones en cada "+str(unidadLongitud)+" metros de tela. Si se toma un retazo de tela de "+str(longitudMuestra)+" metros, ¿cuál es la probabilidad de que esta muestra tenga menos de "+str(cantMaximaErrores)+" "+STRerror+"?"+"\n"
+
+		pReal = poisson.cdf(cantMaximaErrores-1,(longitudMuestra/unidadLongitud)*promErrores) 
+		pError1 = poisson.cdf(cantMaximaErrores,(longitudMuestra/unidadLongitud)*promErrores)
+		pError2 = poisson.cdf(cantMaximaErrores-1,promErrores)
+		pError3 = 1-poisson.cdf(cantMaximaErrores,promErrores)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+	
+	elif i==28:
+		#Proporción de árboles: 5.4.13
+		#[Proporción, tamaño muestra, cantidad limite]
+		lista = [[0.1,100,5],[0.05,200,7],[0.12,100,6],[0.11,100,8],[0.13,500,6],[0.09,100,7]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		proporcion = params[0]
+		tamMuestra = params[1]
+		cantLimite = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Árboles con frutos azules"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(proporcion)+". Si se observan los frutos de "+str(tamMuestra)+" árboles, ¿cuál es la probabilidad de que se encuentren más de "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
+	
+		pReal = 1-poisson.cdf(cantLimite,proporcion*tamMuestra) 
+		pError1 = poisson.cdf(cantLimite,proporcion*tamMuestra)
+		pError2 = 1-poisson.cdf(cantLimite-1,proporcion*tamMuestra)
+		pError3 = poisson.pmf(cantLimite,proporcion*tamMuestra)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+
 ##############################################################################################################################
 
 #Seleccionar los ejercicios a imprimir en el documento .docx según la siguiente lista: 
@@ -1365,9 +1462,9 @@ def RandomProblemGenerator(i):
 
 #Section 5.2 (Bernoulli and binomial distribution): 21-24
 #Section 5.3 (Hypergeometric distribution): 25-26
-#Section 5.4 (Poisson distribution) : TODO
+#Section 5.4 (Poisson distribution) : 27-28 TODO: Más de estos :)
 
-ejercicios = [26]
+ejercicios = [28]
 
 
 #Escribir documento en .tex
