@@ -1444,6 +1444,96 @@ def RandomProblemGenerator(i):
 		
 		return [titulo, version, pregunta, respuestas]
 
+	elif i==29:
+		#Imperfectos en una tela (variación): 5.4.6
+		#[Promedio errores por unidad de longitud, unidad de longitud (metros), longitud tela final (metros)]
+		lista = [[2,10,15],[4,20,15],[3,20,18],[5,50,10],[8,10,12]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		promErrores = params[0]
+		unidadLongitud = params[1]
+		longitudMuestra = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Promedio de imperfectos en una tela"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"		
+
+		pregunta += "Una empresa textil posee una máquina que causa, en promedio, "+str(promErrores)+" imperfecciones en cada "+str(unidadLongitud)+" metros de tela. Si se toma un retazo de "+str(longitudMuestra)+" metros generado por esta máquina, ¿cuántas imperfecciones esperaría ver?"+"\n"
+
+		cantReal = promErrores*(longitudMuestra/unidadLongitud)
+		cantError1 = promErrores*longitudMuestra
+		cantError2 = promErrores**2
+		cantError3 = cantReal**2-cantReal
+
+		cifras=0
+		if pos%2==0:
+			respuestas += "a. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "*d. "+str(int(round(cantReal,cifras)))+"\n"
+
+		else:
+			respuestas += "*a. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError3,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 
+
+	elif i==30:
+		#Personas entrando a un centro comercial: --
+		#[Promedio entrada 1 por hora, promedio entrada 2 por hora, cantidad mínima por hora, cantidad limite]
+		lista = [[12,10,15,25],[15,15,20,28],[10,8,12,20],[5,4,10,15],[8,10,12,19]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		promEntrada1 = params[0]
+		promEntrada2 = params[1]
+		cantMinimaPorHora = params[2]	
+		cantLimite = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Entradas a un centro comercial"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "En un centro comercial pequeño hay dos entradas. En promedio, entran "+str(promEntrada1)+" personas por hora por la primera y "+str(promEntrada2)+" personas por hora por la segunda. Si un una hora se sabe que han entrado al menos "+str(cantMinimaPorHora)+" personas, ¿cuál es la probabilidad de que en esa misma hora entren más de "+str(cantLimite)+" personas?"+"\n"
+
+		pReal = (1-poisson.cdf(cantLimite,promEntrada1+promEntrada2))/(1-poisson.cdf(cantMinimaPorHora-1,promEntrada1+promEntrada2))
+		pError1 = (1-poisson.cdf(cantLimite,promEntrada1+promEntrada2))/(1-poisson.cdf(cantMinimaPorHora,promEntrada1+promEntrada2))
+		pError2 = 1-poisson.cdf(cantLimite,promEntrada1+promEntrada2)
+		pError3 = 1-poisson.cdf(cantMinimaPorHora,promEntrada1+promEntrada2)
+
+		cifras=6
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+		
 
 ##############################################################################################################################
 
@@ -1462,9 +1552,10 @@ def RandomProblemGenerator(i):
 
 #Section 5.2 (Bernoulli and binomial distribution): 21-24
 #Section 5.3 (Hypergeometric distribution): 25-26
-#Section 5.4 (Poisson distribution) : 27-28 TODO: Más de estos :)
+#Section 5.4 (Poisson distribution) : 27-30
+#Se4ction 5.5 (Negative binomial distribution): TODO
 
-ejercicios = [28]
+ejercicios = [29,30]
 
 
 #Escribir documento en .tex
