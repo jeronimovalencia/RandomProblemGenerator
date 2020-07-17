@@ -2,6 +2,7 @@ import numpy as np
 import random as rdm
 import math
 from scipy.stats import binom
+from scipy.stats import nbinom
 from scipy.stats import geom
 from scipy.stats import hypergeom
 from scipy.stats import poisson
@@ -1533,7 +1534,191 @@ def RandomProblemGenerator(i):
 			respuestas += "d. "+str(round(pError2,cifras))+"\n"
 		
 		return [titulo, version, pregunta, respuestas]
+
+
+	#Section 5.5
+
 		
+	elif i==31: 
+		#Lanzar una moneda : 5.5.2
+		#[Probabilidad cara, cantidad máxima caras]
+		lista = [[0.7,5],[0.3,6],[0.6,10],[0.4,8],[0.75,10],[0.25,12]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pSello = params[0]
+		cantMaximaCaras = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Lanzamiento de monedas"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(pSello)+" de obtener sello, ¿cuáles son el número esperado y la varianza de sellos que se obtendrán antes de obtener "+str(cantMaximaCaras)+" caras?"+"\n"
+	
+		p = 1-pSello
+		
+		muReal = cantMaximaCaras*(1-p)/p
+		muError = cantMaximaCaras*(1-pSello)/pSello
+		sigmaReal = cantMaximaCaras*(1-p)/p**2
+		sigmaError = cantMaximaCaras*(1-pSello)/pSello**2
+
+		cifras = 2
+		if pos%2==0:
+			respuestas += "a. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		elif pos%2==1:
+			respuestas += "a. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="b. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+	
+	elif i==32: 
+		#Lanzar una moneda : 5.5.3
+		#[Probabilidad cara, cantidad máxima caras]
+		lista = [[0.7,5],[0.3,6],[0.6,10],[0.4,8],[0.75,10],[0.25,12]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pSello = params[0]
+		cantMaximaCaras = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Lanzamiento de monedas"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(pSello)+" de obtener sello, ¿cuáles son el número esperado y la varianza del número de lanzamientos necesarios para obtener "+str(cantMaximaCaras)+" caras?"+"\n"
+		
+		p = 1-pSello
+		muReal = cantMaximaCaras*(1-p)/p + cantMaximaCaras
+		muError = cantMaximaCaras*(1-p)/p
+		sigmaReal = cantMaximaCaras*(1-p)/p**2
+		sigmaError = cantMaximaCaras*(1-pSello)/pSello**2
+
+		cifras = 2
+		if pos%2==0:
+			respuestas += "a. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+
+		elif pos%2==1:
+			respuestas += "*a. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="b. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+	
+	elif i==33:
+		#Suma de binomiales negativas: 5.5.5
+		#[Probabilidad de obtener una pelota blanca, Cantidad blancas bolsa 1, cantidad blancas bolsa 2, cantidad negras antes de la suma]
+		lista = [[0.4,10,15,12],[0.3,6,8,18],[0.6,10,10,13],[0.4,15,12,19],[0.7,10,8,15],[0.5,12,14,16]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pBlanca = params[0]
+		cantBlancas1 = params[1]
+		cantBlancas2 = params[2]
+		cantFinal = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Bolsas de pelotas"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Suponga que se tiene dos bolsas con pelotas blancas y negras. La probabilidad de sacar una bola blanca de cualquiera de las dos bolsas es "+str(pBlanca)+". Si se sacan, con reemplazo, pelotas de la primera bolsa hasta alcanzar "+str(cantBlancas1)+" blancas, y de la segunda hasta alcanzar "+str(cantBlancas2)+" blancas, ¿cuál es la probabilidad de sacar "+str(cantFinal)+" pelotas negras en todo el proceso?"+"\n"
+
+		pReal = nbinom.pmf(cantFinal,cantBlancas1+cantBlancas2,pBlanca)
+		pError1 = nbinom.pmf(cantFinal,cantBlancas1,pBlanca)*nbinom.pmf(cantFinal,cantBlancas2,pBlanca)
+		pError2 = binom.pmf(cantFinal,cantBlancas1+cantBlancas2,pBlanca)
+		pError3 = (binom.pmf(cantBlancas1,cantFinal,pBlanca)+binom.pmf(cantBlancas2,cantFinal,pBlanca))/2
+		
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==34:
+		#Suma de binomiales negativas (variación) : 5.5.5
+		#[Probabilidad de obtener una pelota blanca, Cantidad blancas bolsa 1, cantidad blancas bolsa 2]
+		lista = [[0.4,10,15],[0.3,6,8],[0.6,10,10],[0.4,15,12],[0.7,10,8],[0.5,12,14]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pBlanca = params[0]
+		cantBlancas1 = params[1]
+		cantBlancas2 = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Bolsas de pelotas"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Suponga que se tiene dos bolsas con pelotas blancas y negras. La probabilidad de sacar una bola blanca de cualquiera de las dos bolsas es "+str(pBlanca)+". Si se sacan, con reemplazo, pelotas de la primera bolsa hasta alcanzar "+str(cantBlancas1)+" blancas, y de la segunda hasta alcanzar "+str(cantBlancas2)+" blancas, ¿cuál es la cantidad de pelotas que esperaría sacar en total de las dos bolsas?"+"\n"
+
+		cantReal = (cantBlancas1+cantBlancas2)*(1-pBlanca)/pBlanca + (cantBlancas1+cantBlancas2)
+		cantError1 = (cantBlancas1+cantBlancas2)*pBlanca
+		cantError2 = (cantBlancas1+cantBlancas2)*(1-pBlanca)/pBlanca 
+		cantError3 = (cantBlancas1+cantBlancas2)
+
+		cifras=0
+		if pos%2==0:
+			respuestas += "*a. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "d. "+str(int(round(cantError2,cifras)))+"\n"
+
+		else:
+			respuestas += "a. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError1,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 
 
 ##############################################################################################################################
 
@@ -1553,9 +1738,9 @@ def RandomProblemGenerator(i):
 #Section 5.2 (Bernoulli and binomial distribution): 21-24
 #Section 5.3 (Hypergeometric distribution): 25-26
 #Section 5.4 (Poisson distribution) : 27-30
-#Se4ction 5.5 (Negative binomial distribution): TODO
+#Se4ction 5.5 (Negative binomial distribution): 31-34
 
-ejercicios = [29,30]
+ejercicios = [33]
 
 
 #Escribir documento en .tex
