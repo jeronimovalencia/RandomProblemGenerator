@@ -1720,6 +1720,229 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas] 
 
+
+	#ADICIONALES
+
+
+	elif i==35: 
+		# Binomial condicional
+		#[Probabilidad de fallo, cantidad minima de fallos obersvados, cantidad de fallos, tamaño muestra, objeto]	
+		lista = [[0.4,2,6,10, "una impresora"],[0.3,3,8,12, "un celular"],[0.6,2,6,10, "una máquina de escribir"],[0.4,3,7,11,"una guitarra"],[0.7,2,6,8,"un portafolios"],[0.5,3,5,6,"una computadora"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pFallo = params[0]
+		cantMinimaFallos = params[1]
+		cantFallos = params[2]
+		tamMuestra = params[3]
+		objeto = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Fallo de componentes"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+	
+		pregunta += "Un cierto componente de "+objeto+" falla con una probabilidad de "+str(pFallo)+". Si se toman "+str(tamMuestra)+" de estos objetos y se ve que hay al menos "+str(cantMinimaFallos)+" con la falla, ¿cuál es la probabilidad que "+str(cantFallos)+" objetos de la muestra tengan el fallo?"+"\n"
+
+		pReal = binom.pmf(cantFallos, tamMuestra, pFallo) / (1-binom.cdf(cantMinimaFallos-1,tamMuestra,pFallo))
+		pError1 = binom.pmf(cantFallos, tamMuestra, pFallo)
+		pError2 = binom.pmf(cantFallos, tamMuestra, pFallo) / (1-binom.cdf(cantMinimaFallos,tamMuestra,pFallo))
+		pError3 = binom.pmf(cantMinimaFallos, tamMuestra, pFallo) / (1-binom.cdf(cantFallos-1,tamMuestra,pFallo))
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+
+	elif i==36:
+		#Proporción de fichas (binom)
+		#[Proporción de fichas rojas, cantidad muestra, cantidad fichas negras]
+		lista = [[0.4,20,10],[0.3,15,7],[0.5,8,3],[0.6,12,9],[0.7,15,9]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pRoja = params[0]
+		cantMuestra = params[1]
+		cantNegras = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Fichas de Damas Chinas"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta += "Una bolsa contiene fichas rojas y negras. La proporción de fichas rojas es de "+str(int(10*pRoja))+ " por cada 10 fichas. Si se sacan aleatoriamente "+str(cantMuestra)+" fichas de esta bolsa, ¿cuál es la probabilidad que haya menos de "+str(cantNegras)+ " fichas negras?"+"\n"
+	
+		
+		pReal = binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
+		pError1 = 1-binom.cdf(cantNegras-1,cantMuestra,pRoja)
+		pError2 = binom.cdf(cantNegras,cantMuestra,1-pRoja)
+		pError3 = 1-binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
+		
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==37:
+		#Proporción de fichas (hipergeom)
+		#[Proporción de fichas rojas, cantidad muestra, cantidad fichas negras, cantidad total de fichas en la bolsa]
+		lista = [[0.4,20,10,30],[0.3,15,7,20],[0.5,8,3,16],[0.6,12,6,15],[0.7,15,8,20]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pRoja = params[0]
+		cantMuestra = params[1]
+		cantNegras = params[2]
+		cantTotalFichas = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Fichas de Damas Chinas"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta += "Una bolsa contiene "+str(cantTotalFichas)+" fichas rojas y negras. La proporción de fichas rojas es de "+str(int(10*pRoja))+ " por cada 10. Si se sacan aleatoriamente "+str(cantMuestra)+" fichas de esta bolsa, ¿cuál es la probabilidad que haya menos de "+str(cantNegras)+ " fichas negras?"+"\n"
+	
+		
+		pReal = hypergeom.cdf(cantNegras-1,cantTotalFichas,cantTotalFichas-pRoja*cantTotalFichas,cantMuestra)
+		pError1 = binom.cdf(cantNegras-1,cantMuestra,pRoja)
+		pError2 = hypergeom.cdf(cantNegras,cantTotalFichas,pRoja*cantTotalFichas,cantMuestra)
+		pError3 = binom.cdf(cantNegras,cantMuestra,1-pRoja)
+		
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+	
+	elif i==38:
+		#Pelotas de colores (Variación): 5.3.2
+		#[Cantidad pelotas azules, cantidad pelotas rojas, cantidad muestra, cantidad limite, color pregunta]
+		lista = [[5,5,7,"azules"],[4,6,6,"rojas"],[7,11,7,"azules"],[8,6,5,"rojas"],[8,4,6,"azules"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		cantAzul = params[0]
+		cantRoja = params[1]
+		cantMuestra = params[2]
+		STRcolor = params[3]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Pelotas de colores"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+		
+		pregunta += "En una caja hay "+str(cantAzul)+" pelotas azules y "+str(cantRoja)+" pelotas rojas. Si se sacan "+str(cantMuestra)+" pelotas de la caja, ¿cuál es el valor esperado de pelotas "+STRcolor+" que esperaría ver?"+"\n"
+	
+		cantRealAzul = cantMuestra*(cantAzul/(cantAzul+cantRoja))
+		cantRealRoja = cantMuestra*(cantRoja/(cantAzul+cantRoja))
+		cantError1 = cantMuestra*(cantAzul/cantRoja)
+		cantError2 = cantMuestra*(cantRoja/cantAzul)
+		
+		cifras=2
+
+		if STRcolor == "rojas": 
+			if pos%2==0:
+				respuestas += "a. "+str(round(cantError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*c. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantRealAzul,cifras))+"\n"
+
+			else:
+				respuestas += "*a. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantError1,cifras))+"\n"
+
+		else: 
+			if pos%2==0:
+				respuestas += "*a. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(cantError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantRealRoja,cifras))+"\n"
+
+			else:
+				respuestas += "a. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*c. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##############################################################################################################################
 
 #Seleccionar los ejercicios a imprimir en el documento .docx según la siguiente lista: 
@@ -1740,7 +1963,15 @@ def RandomProblemGenerator(i):
 #Section 5.4 (Poisson distribution) : 27-30
 #Se4ction 5.5 (Negative binomial distribution): 31-34
 
-ejercicios = [33]
+#Adicionales: 
+
+# Distribución binomial: 35, 36, 
+# Distribución hipergeométrica: 37, 38
+# Distribución binomial negativa: 
+# DIstribución de Poisson: 
+
+
+ejercicios = [36,37,38]
 
 
 #Escribir documento en .tex
