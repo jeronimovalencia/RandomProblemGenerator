@@ -1932,16 +1932,94 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 
 
+	elif i==39:
+		#Personas entrando a un centro comercial (Variación)
+		#[Promedio entrada 1 por hora, promedio entrada 2 por hora, cantidad horas a evaluar]
+		lista = [[12,10,3],[15,15,2],[10,8,4],[5,4,5],[8,10,3]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		promEntrada1 = params[0]
+		promEntrada2 = params[1]
+		cantHoras = params[2]	
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Entradas a un centro comercial"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "En un centro comercial pequeño hay dos entradas. En promedio, entran "+str(promEntrada1)+" personas por hora por la primera y "+str(promEntrada2)+" personas por hora por la segunda. En un periodo de "+str(cantHoras)+" horas, ¿cuántas personas esperaría que entren a tal centro comercial por estas entradas?"+"\n"
+
+		cantReal = (cantHoras*promEntrada1+cantHoras*promEntrada2) 
+		cantError1 = cantHoras*promEntrada1*promEntrada2
+		cantError2 = cantHoras*(1/promEntrada1+1/promEntrada2)
+		cantError3 = (promEntrada1+promEntrada2)
+
+		cifras=0
+		if pos%2==0:
+			respuestas += "a. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "d. "+str(int(round(cantError2,cifras)))+"\n"
+
+		else:
+			respuestas += "a. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError1,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 
 
 
+	elif i==40:
+		#Media de una distribución de Poisson
+		#[N tal que p(N+1)=p(N), texto pregunta]
+		lista = [[11,"el valor esperado"],[105,"el valor esperado"],[7,"la varianza"],[59,"la varianza"],[306,"la varianza"],[10,"el valor esperado"],[74,"el valor esperado"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]	
+		N = params[0]
+		texto = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Media de una distribución"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
+		pregunta += "Suponga que $X$ es una variable aleatoria con distribución de Poisson tal que $Pr(X="+str(N)+")=Pr(X="+str(N+1)+")$. ¿Cuál es "+texto+"de esta variable aleatoria?"+"\n"
 
+		respReal = N 
+		respError1 = N+1 
+		respError2 = 1/N
+		respError3 = 1/(math.exp(1/N)-1)
 
+		cifras=5
 
+		if pos%2==0:
+			respuestas += "a. "+str(round(respError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(respReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(respError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(respError2,cifras))+"\n"
 
-
-
-
+		else:
+			respuestas += "a. "+str(round(respError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(respError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(respReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(respError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
 
 ##############################################################################################################################
 
@@ -1967,11 +2045,11 @@ def RandomProblemGenerator(i):
 
 # Distribución binomial: 35, 36, 
 # Distribución hipergeométrica: 37, 38
+# Distribución de Poisson: 39,40
 # Distribución binomial negativa: 
-# DIstribución de Poisson: 
 
 
-ejercicios = [36,37,38]
+ejercicios = [39,40]
 
 
 #Escribir documento en .tex
