@@ -2049,7 +2049,10 @@ def RandomProblemGenerator(i):
 # Distribución binomial negativa: 
 
 
+#TODOS
+#ejercicios = list(range(1,41))
 ejercicios = [39,40]
+
 
 
 #Escribir documento en .tex
