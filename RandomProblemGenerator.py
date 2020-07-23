@@ -813,6 +813,110 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas] 
 
 
+	elif i==41:
+		#Apostador : 3.194
+		#[Probabilidad de ganar, costo entrada, ganancia, dinero inicial, cantidad de veces ganadas, dinero final]
+
+		# (cantGanadas*ganancia+dineroInicial-dineroFinal)/costoEntrada debe ser un entero
+
+		lista = [[0.1,10,50,30,4,100],[0.2,4,12,20,3,36],[0.3,10,50,30,5,150],[0.2,6,30,60,4,150]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pGanar = params[0]
+		costoEntrada = params[1]
+		ganancia = params[2]
+		dineroInicial = params[3]
+		cantGanadas = params[4]
+		dineroFinal = params[5]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Apostador"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino. Para entrar al juego debe pagar \$"+str(costoEntrada)+" y en caso de ganar recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es la probabilidad que, tras ganar "+str(cantGanadas)+" veces en este juego, salga con \$"+str(dineroFinal)+" del casino?"+"\n"
+
+		fallos = (cantGanadas*ganancia+dineroInicial-dineroFinal)/costoEntrada
+
+		pReal = nbinom.pmf(int(fallos),cantGanadas,pGanar)
+		pError1 = nbinom.pmf(int((cantGanadas*ganancia)/costoEntrada), cantGanadas, pGanar)
+		pError2 = nbinom.pmf(int((cantGanadas*ganancia+dineroInicial)/costoEntrada),cantGanadas,pGanar)
+		pError3 = nbinom.cdf(int(fallos), cantGanadas, pGanar)
+
+		cifras=6
+
+		if pos%2==0:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError1,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==42:
+		#Apostador (Variación): 3.194
+		#[Probabilidad de ganar, costo entrada, ganancia, dinero inicial, cantidad de veces ganadas, dinero final]
+
+		# (dineroFinal-dineroInicial)/ganancia debe ser un entero
+
+		lista = [[0.1,10,40,20,4,100],[0.2,4,8,20,3,36],[0.3,10,40,30,5,150],[0.2,6,30,20,4,140]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		pGanar = params[0]
+		costoEntrada = params[1]
+		ganancia = params[2]
+		dineroInicial = params[3]
+		cantGanadas = params[4]
+		dineroFinal = params[5]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Apostador"+"\n"
+		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
+
+		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino. Para entrar al juego debe pagar \$"+str(costoEntrada)+" y en caso de ganar recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es el mínimo de rondas de tal juego a las cuales esperaría entrar para salir con \$"+str(dineroFinal)+" del casino?"+"\n"
+
+
+		cantReal = (1+int((dineroFinal-dineroInicial)/ganancia))/pGanar + (1+int((dineroFinal-dineroInicial)/ganancia))
+		cantError1 = (1+int((dineroFinal-dineroInicial)/ganancia))/pGanar
+		cantError2 = (cantGanadas*ganancia-dineroFinal+dineroInicial)/costoEntrada
+		cantError3 = 1+int((dineroFinal-dineroInicial)/ganancia)
+
+		cifras=2
+		if pos%2==0:
+			respuestas += "a. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(int(round(cantError3,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "c. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"		
+			respuestas += "*d. "+str(int(round(cantReal,cifras)))+"\n"
+
+		else:
+			respuestas += "*a. "+str(int(round(cantReal,cifras)))+"\n"
+			respuestas += " "+"\n"			
+			respuestas += "b. "+str(int(round(cantError1,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(int(round(cantError2,cifras)))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(int(round(cantError3,cifras)))+"\n"
+
+		return [titulo, version, pregunta, respuestas] 
+
 	#Sección 3.8
 
 
@@ -2021,6 +2125,8 @@ def RandomProblemGenerator(i):
 		
 		return [titulo, version, pregunta, respuestas]
 
+
+
 ##############################################################################################################################
 
 #Seleccionar los ejercicios a imprimir en el documento .docx según la siguiente lista: 
@@ -2030,7 +2136,7 @@ def RandomProblemGenerator(i):
 #Sección 3.3 (El valor esperado de una variable aleatoria o una función de una variable aleatoria) : 1-3
 #Sección 3.4 (Distribución binomial) : 4-6
 #Sección 3.5 (Distribución geométrica) : 7-10
-#Sección 3.6 (Distribución binomial negativa) : 11-12
+#Sección 3.6 (Distribución binomial negativa) : 11-12, 41-42
 #Sección 3.7 (Distribución hipergeométrica) : 13-16
 #Sección 3.8 (Distribución de Poisson) : 17-20
 
@@ -2046,12 +2152,11 @@ def RandomProblemGenerator(i):
 # Distribución binomial: 35, 36, 
 # Distribución hipergeométrica: 37, 38
 # Distribución de Poisson: 39,40
-# Distribución binomial negativa: 
 
 
 #TODOS
-#ejercicios = list(range(1,41))
-ejercicios = [39,40]
+#ejercicios = list(range(1,43))
+ejercicios = [41,42]
 
 
 
