@@ -837,11 +837,11 @@ def RandomProblemGenerator(i):
 
 		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino. Para entrar al juego debe pagar \$"+str(costoEntrada)+" y en caso de ganar recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es la probabilidad que, tras ganar "+str(cantGanadas)+" veces en este juego, salga con \$"+str(dineroFinal)+" del casino?"+"\n"
 
-		fallos = (cantGanadas*ganancia+dineroInicial-dineroFinal)/costoEntrada
+		fallos = (cantGanadas*(ganancia-costoEntrada)+dineroInicial-dineroFinal)/costoEntrada
 
 		pReal = nbinom.pmf(int(fallos),cantGanadas,pGanar)
 		pError1 = nbinom.pmf(int((cantGanadas*ganancia)/costoEntrada), cantGanadas, pGanar)
-		pError2 = nbinom.pmf(int((cantGanadas*ganancia+dineroInicial)/costoEntrada),cantGanadas,pGanar)
+		pError2 = nbinom.pmf(int((cantGanadas*ganancia+dineroInicial-dineroFinal)/costoEntrada),cantGanadas,pGanar)
 		pError3 = nbinom.cdf(int(fallos), cantGanadas, pGanar)
 
 		cifras=6
@@ -888,13 +888,13 @@ def RandomProblemGenerator(i):
 		titulo += "Apostador"+"\n"
 		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino. Para entrar al juego debe pagar \$"+str(costoEntrada)+" y en caso de ganar recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es el mínimo de rondas de tal juego a las cuales esperaría entrar para salir con \$"+str(dineroFinal)+" del casino?"+"\n"
+		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino y en caso de hacerlo recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es el mínimo de rondas que debe jugar para esperar salir con \$"+str(dineroFinal)+" del casino?"+"\n"
 
 
-		cantReal = (1+int((dineroFinal-dineroInicial)/ganancia))/pGanar + (1+int((dineroFinal-dineroInicial)/ganancia))
-		cantError1 = (1+int((dineroFinal-dineroInicial)/ganancia))/pGanar
-		cantError2 = (cantGanadas*ganancia-dineroFinal+dineroInicial)/costoEntrada
-		cantError3 = 1+int((dineroFinal-dineroInicial)/ganancia)
+		cantReal = (int((dineroFinal-dineroInicial)/ganancia))/pGanar
+		cantError1 = int((dineroFinal-dineroInicial)/ganancia))
+		cantError2 = (cantGanadas*ganancia-dineroFinal+dineroInicial)
+		cantError3 = (int((dineroFinal-dineroInicial)/ganancia))*pGanar
 
 		cifras=2
 		if pos%2==0:
@@ -986,7 +986,7 @@ def RandomProblemGenerator(i):
 
 		pReal = poisson.pmf(cantPersonas,promEntrada1+promEntrada2)
 		pError1 = poisson.cdf(cantPersonas,promEntrada1)
-		pError2 = 1-poisson.cdf(cantPersonas,promEntrada2)
+		pError2 = poisson.pmf(cantPersonas,promEntrada1)*poisson.pmf(cantPersonas,promEntrada2)
 		pError3 = poisson.cdf(cantPersonas,promEntrada1)*poisson.cdf(cantPersonas,promEntrada2)
 			
 		cifras=6
@@ -1181,7 +1181,7 @@ def RandomProblemGenerator(i):
 		titulo += "Disparos con probabilidad"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Tres personas van a disparar a un onjetivo. La primera persona disparará "+str(cantTiros1)+" veces y tiene probabilidad de acertar de "+str(pAcierto1)+". La segunda lo hará "+str(cantTiros2)+" veces y tiene probabilidad de acierto de "+str(pAcierto2)+"; y la tercera "+str(cantTiros3)+" veces y tiene probabilidad de dar en el blanco de "+str(pAcierto3)+". ¿Cuál es el valor esperado y la varianza del número de disparos que dan en el blanco? (Asuma que los disparos son independientes)"+"\n"
+		pregunta += "Tres personas van a disparar a un objetivo. La primera persona disparará "+str(cantTiros1)+" veces y tiene probabilidad de acertar de "+str(pAcierto1)+". La segunda lo hará "+str(cantTiros2)+" veces y tiene probabilidad de acierto de "+str(pAcierto2)+"; y la tercera "+str(cantTiros3)+" veces y tiene probabilidad de dar en el blanco de "+str(pAcierto3)+". ¿Cuál es el valor esperado y la varianza del número de disparos que dan en el blanco? (Asuma que los disparos son independientes)"+"\n"
 
 		muReal = pAcierto1*cantTiros1+pAcierto2*cantTiros2+pAcierto3*cantTiros3
 		sigmaReal = pAcierto1*cantTiros1*(1-pAcierto1)+pAcierto2*cantTiros2*(1-pAcierto2)+pAcierto3*cantTiros3*(1-pAcierto3)
@@ -1610,7 +1610,7 @@ def RandomProblemGenerator(i):
 		titulo += "Entradas a un centro comercial"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "En un centro comercial pequeño hay dos entradas. En promedio, entran "+str(promEntrada1)+" personas por hora por la primera y "+str(promEntrada2)+" personas por hora por la segunda. Si un una hora se sabe que han entrado al menos "+str(cantMinimaPorHora)+" personas, ¿cuál es la probabilidad de que en esa misma hora entren más de "+str(cantLimite)+" personas?"+"\n"
+		pregunta += "En un centro comercial pequeño hay dos entradas. En promedio, entran "+str(promEntrada1)+" personas por hora por la primera y "+str(promEntrada2)+" personas por hora por la segunda. Si en una hora se sabe que han entrado al menos "+str(cantMinimaPorHora)+" personas, ¿cuál es la probabilidad de que en esa misma hora entren más de "+str(cantLimite)+" personas?"+"\n"
 
 		pReal = (1-poisson.cdf(cantLimite,promEntrada1+promEntrada2))/(1-poisson.cdf(cantMinimaPorHora-1,promEntrada1+promEntrada2))
 		pError1 = (1-poisson.cdf(cantLimite,promEntrada1+promEntrada2))/(1-poisson.cdf(cantMinimaPorHora,promEntrada1+promEntrada2))
@@ -1892,7 +1892,7 @@ def RandomProblemGenerator(i):
 		titulo += "Fichas de Damas Chinas"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 		
-		pregunta += "Una bolsa contiene fichas rojas y negras. La proporción de fichas rojas es de "+str(int(10*pRoja))+ " por cada 10 fichas. Si se sacan aleatoriamente "+str(cantMuestra)+" fichas de esta bolsa, ¿cuál es la probabilidad que haya menos de "+str(cantNegras)+ " fichas negras?"+"\n"
+		pregunta += "Una bolsa contiene fichas rojas y negras. La probabilidad de sacar una ficha roja de esta bolsa es de "+str(pRoja)+". Si se sacan aleatoriamente "+str(cantMuestra)+" fichas de esta bolsa, ¿cuál es la probabilidad que haya menos de "+str(cantNegras)+ " fichas negras?"+"\n"
 	
 		
 		pReal = binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
@@ -2052,7 +2052,7 @@ def RandomProblemGenerator(i):
 		titulo += "Entradas a un centro comercial"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "En un centro comercial pequeño hay dos entradas. En promedio, entran "+str(promEntrada1)+" personas por hora por la primera y "+str(promEntrada2)+" personas por hora por la segunda. En un periodo de "+str(cantHoras)+" horas, ¿cuántas personas esperaría que entren a tal centro comercial por estas entradas?"+"\n"
+		pregunta += "En un centro comercial pequeño hay dos entradas. En promedio, entran "+str(promEntrada1)+" personas por hora por la primera y "+str(promEntrada2)+" personas por hora por la segunda. En un periodo de "+str(cantHoras)+" horas, ¿cuántas personas esperaría que entren a tal centro comercial?"+"\n"
 
 		cantReal = (cantHoras*promEntrada1+cantHoras*promEntrada2) 
 		cantError1 = cantHoras*promEntrada1*promEntrada2
@@ -2096,10 +2096,10 @@ def RandomProblemGenerator(i):
 		titulo += "Media de una distribución"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Suponga que $X$ es una variable aleatoria con distribución de Poisson tal que $Pr(X="+str(N)+")=Pr(X="+str(N+1)+")$. ¿Cuál es "+texto+"de esta variable aleatoria?"+"\n"
+		pregunta += "Suponga que $X$ es una variable aleatoria con distribución de Poisson tal que $Pr(X="+str(N)+")=Pr(X="+str(N+1)+")$. ¿Cuál es "+texto+" de esta variable aleatoria?"+"\n"
 
-		respReal = N 
-		respError1 = N+1 
+		respReal = N+1
+		respError1 = N
 		respError2 = 1/N
 		respError3 = 1/(math.exp(1/N)-1)
 
