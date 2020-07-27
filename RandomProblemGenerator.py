@@ -459,7 +459,7 @@ def RandomProblemGenerator(i):
 	
 	elif i==10: 
 		#Moneda no justa: 3.81
-		lista = [0.05,0.1,0.4,0.8]
+		lista = [0.05,0.1,0.4,0.6]
 		pos=rdm.randint(1,len(lista))			
 		p = lista[pos-1]
 		titulo = ""
@@ -646,7 +646,7 @@ def RandomProblemGenerator(i):
 	elif i==14:
 		#Flores blancas y rojas : 3.114
 		#[Tamaño ramo, cantidad total flores, cantidad flores rojas del total]
-		lista = [[10,100,50],[25,200,150],[15,150,60],[20,300,175],[30,200,120]]
+		lista = [[10,100,50],[25,200,150],[15,140,60],[20,300,175],[30,200,120]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
 		tamRamo = params[0]
@@ -691,7 +691,8 @@ def RandomProblemGenerator(i):
 	elif i==15:
 		#Costo de reparación: 3.106
 		#[Nombre artículo, cantidad total articulos, cantidad articulos defectuosos, costo reparación, tamaño del muestreo]
-		lista = [["celulares",100,15,100000,10], ["computadores",20,5,150000,5], ["esferos",200,25,10000,16], ["pantalones",50,12,20000,8]]
+		#tamMuestra != cantArticulosDefectuosos
+		lista = [["celulares",100,15,100000,10], ["computadores",20,7,150000,5], ["esferos",200,25,10000,16], ["pantalones",50,12,20000,8]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
 		articulos = params[0]
@@ -782,11 +783,11 @@ def RandomProblemGenerator(i):
 		cantError2 = int(cantReal*4/3)
 
 		parar = False
-		cont = 0
+		cont = 1
 		while parar == False :
 			cont += 1			
 			probError3 = bin_coeff(cantArticulosDefectuosos,1)*bin_coeff(cantTotalArticulos-cantArticulosDefectuosos,cont-1)/bin_coeff(cantTotalArticulos,cont)
-			if probError3 > 1-probabilidadAlMenosUnDefecto/1.5:
+			if probError3 <= 1-probabilidadAlMenosUnDefecto/1.5:
 				parar = True
 
 		cantError3 = cont
@@ -892,9 +893,9 @@ def RandomProblemGenerator(i):
 
 
 		cantReal = (int((dineroFinal-dineroInicial)/ganancia))/pGanar
-		cantError1 = int((dineroFinal-dineroInicial)/ganancia))
+		cantError1 = int((dineroFinal-dineroInicial)/ganancia)
 		cantError2 = (cantGanadas*ganancia-dineroFinal+dineroInicial)
-		cantError3 = (int((dineroFinal-dineroInicial)/ganancia))*pGanar
+		cantError3 = (int((dineroFinal-dineroInicial)/ganancia))/(1-pGanar)
 
 		cifras=2
 		if pos%2==0:
@@ -1898,7 +1899,7 @@ def RandomProblemGenerator(i):
 		pReal = binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
 		pError1 = 1-binom.cdf(cantNegras-1,cantMuestra,pRoja)
 		pError2 = binom.cdf(cantNegras,cantMuestra,1-pRoja)
-		pError3 = 1-binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
+		pError3 = 1-binom.cdf(cantNegras,cantMuestra,1-pRoja)
 		
 		cifras=5
 
@@ -2056,7 +2057,7 @@ def RandomProblemGenerator(i):
 
 		cantReal = (cantHoras*promEntrada1+cantHoras*promEntrada2) 
 		cantError1 = cantHoras*promEntrada1*promEntrada2
-		cantError2 = cantHoras*(1/promEntrada1+1/promEntrada2)
+		cantError2 = promEntrada2*promEntrada1
 		cantError3 = (promEntrada1+promEntrada2)
 
 		cifras=0
@@ -2154,9 +2155,12 @@ def RandomProblemGenerator(i):
 # Distribución de Poisson: 39,40
 
 
-#TODOS
-#ejercicios = list(range(1,43))
-ejercicios = [41,42]
+#LISTA
+ejercicios = list(range(31,43))
+
+
+#MANUAL
+#ejercicios = [41,42]
 
 
 
