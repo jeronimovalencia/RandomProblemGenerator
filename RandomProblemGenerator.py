@@ -1453,7 +1453,6 @@ def RandomProblemGenerator(i):
 
 		return [titulo, version, pregunta, respuestas]
 
-
 	
 	#Section 5.4
 
@@ -1691,7 +1690,7 @@ def RandomProblemGenerator(i):
 
 	
 	elif i==32: 
-		#Lanzar una moneda : 5.5.3
+		#Lanzar una moneda (variación) : 5.5.3
 		#[Probabilidad cara, cantidad máxima caras]
 		lista = [[0.7,5],[0.3,6],[0.6,10],[0.4,8],[0.75,10],[0.25,12]]
 		pos=rdm.randint(1,len(lista))			
@@ -2126,6 +2125,119 @@ def RandomProblemGenerator(i):
 		
 		return [titulo, version, pregunta, respuestas]
 
+	elif i==43:
+		#Pelotas de colores (variación) : 5.3.2
+		#[Cantidad pelotas azules, cantidad pelotas rojas, cantidad muestra, cantidad limite, color pregunta]
+		lista = [[15,26,7,3,"azules"],[14,26,6,3,"rojas"],[17,11,7,4,"azules"],[28,16,5,3,"rojas"],[18,4,6,4,"azules"]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		cantAzul = params[0]
+		cantRoja = params[1]
+		cantMuestra = params[2]
+		cantLim = params[3]
+		STRcolor = params[4]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Pelotas de colores"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+		
+		pregunta += "En una caja hay "+str(cantAzul)+" pelotas azules y "+str(cantRoja)+" pelotas rojas. Si se sacan "+str(cantMuestra)+" pelotas de la caja sin reemplazo, ¿cuál es la cantidad esperada de pelotas "+STRcolor+"?"+"\n"
+	
+		cantRealAzul = cantMuestra*cantAzul/(cantRoja+cantAzul)
+		cantRealRoja = cantMuestra*cantRoja/(cantRoja+cantAzul)
+		cantError1 = cantMuestra*cantAzul/(cantRoja)
+		cantError2 = cantMuestra*cantRoja/(cantAzul)
+		
+		cifras=2
+
+		if STRcolor == "rojas": 
+			if pos%2==0:
+				respuestas += "a. "+str(round(cantError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*b. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantError2,cifras))+"\n"
+
+			else:
+				respuestas += "*a. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(cantError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantError2,cifras))+"\n"
+
+		else: 
+			if pos%2==0:
+				respuestas += "a. "+str(round(cantError1,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "c. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*d. "+str(round(cantRealAzul,cifras))+"\n"
+
+			else:
+				respuestas += "a. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "*c. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += " "+"\n"
+				respuestas += "d. "+str(round(cantError1,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+
+	elif i==44:
+		#Proporción de árboles (variacion) : 5.4.13
+		#[Proporción, tamaño muestra, cantidad limite]
+		lista = [[0.1,100,50],[0.05,200,70],[0.12,100,60],[0.11,100,80],[0.13,500,6],[0.09,100,70]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		proporcion = params[0]
+		tamMuestra = params[1]
+		cantLimite = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "Árboles con frutos azules"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
+		
+		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(proporcion)+". ¿Cuántos árboles hay que analizar si se quieren encontrar "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
+	
+		cantReal = cantLimite/proporcion
+		cantError1 = 100*cantLimite*proporcion
+		cantError2 = cantLimite/((proporcion)**2)
+		cantError3 = cantLimite/(1-proporcion)
+
+		cifras=0
+
+		if pos%2==0:
+			respuestas += "*a. "+str(round(cantReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(cantError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(cantError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(cantError1,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(cantError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(cantError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(cantError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(cantReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]	
+
 
 
 ##############################################################################################################################
@@ -2143,8 +2255,8 @@ def RandomProblemGenerator(i):
 
 #DeGroot & Schervish - Probability and Statistics 
 
-#Section 5.2 (Bernoulli and binomial distribution): 21-24
-#Section 5.3 (Hypergeometric distribution): 25-26
+#Section 5.2 (Bernoulli and binomial distribution): 21-24, 44
+#Section 5.3 (Hypergeometric distribution): 25-26, 43
 #Section 5.4 (Poisson distribution) : 27-30
 #Se4ction 5.5 (Negative binomial distribution): 31-34
 
@@ -2156,11 +2268,11 @@ def RandomProblemGenerator(i):
 
 
 #LISTA
-ejercicios = list(range(31,43))
+#ejercicios = list(range(31,43))
 
 
 #MANUAL
-#ejercicios = [41,42]
+ejercicios = [43,44]
 
 
 
