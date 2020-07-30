@@ -1104,6 +1104,307 @@ def RandomProblemGenerator(i):
 		return [titulo, version, pregunta, respuestas]
 
 
+	#Seccion 3.9
+
+
+	elif i==45: 
+		#Función generadora de momentos de una binomial
+		#[n,p,N]
+		lista = [[20,0.4,15],[30,0.2,23],[25,0.45,8],[50,0.25,12],[15,0.73,4],[75,0.19,20]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		n = params[0]
+		p = params[1]
+		N = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "MGF"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Suponga que $X$ es una variable aleatoria con función generadora de momentos dada por "
+		
+		mgf = "$\left("+str(p)+"e^t+"+str(1-p)+"\ "+"right)^{"+str(n)+"}$" 
+		mgf = mgf.replace(" ","")
+
+		pregunta += mgf+". ¿Cuánto vale Pr$(X\geq"+str(N)+")$?"+"\n"
+		
+		pReal = 1-binom.cdf(N-1,n,p)
+		pError1 = 1-binom.cdf(N,n,p)
+		pError2 = 1-binom.cdf(N-1,n,1-p)
+		pError3 = 1-geom.cdf(n,p)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==46:
+		#Función generadora de momentos de una binomial (variacion)
+		#[n,p,N]
+		lista = [[20,0.4,15],[30,0.2,23],[25,0.05,17],[100,0.05,69],[47,0.73,23],[123,0.19,100]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		n = params[0]
+		p = params[1]
+		N = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "MGF"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Suponga que $X$ es una variable aleatoria con función generadora de momentos dada por "
+		
+		mgf = "$\left("+str(p)+"e^t+"+str(1-p)+"\ "+"right)^{"+str(n)+"}$" 
+		mgf = mgf.replace(" ","")
+
+		pregunta += mgf+". ¿Cuáles son el valor esperado y la varianza de X?"+"\n"	
+	
+		muReal = n*p
+		muError = 1/p
+		sigmaReal = n*p*(1-p)
+		sigmaError = (1-p)/p**2
+
+		cifras = 3
+		if pos%2==0:
+			respuestas += "*a. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		elif pos%2==1:
+			respuestas += "a. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="*b. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+	
+	elif i==47:
+		#Función generadora de momentos geométrica
+		#[p,N]
+		lista = [[0.6,10],[0.2,8],[0.1,5],[0.3,12],[0.73,4],[0.19,9]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		p = params[0]
+		N = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "MGF"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Suponga que $X$ es una variable aleatoria con función generadora de momentos dada por "
+
+		mgf = "$\ "+"frac{"+str(p)+"e^t}{1-"+str(1-p)+"e^t}$" 
+		mgf = mgf.replace(" ","")
+
+		pregunta += mgf+". ¿Cuánto vale Pr$(X\leq"+str(N)+")$?"+"\n"
+
+		pReal = geom.cdf(N,p)
+		pError1 = geom.pmf(N,p)
+		pError2 = geom.cdf(N,1-p)
+		pError3 = 1-pReal
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*d. "+str(round(pReal,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+	elif i==48:
+		#Función generadora de momentos geométrica
+		#[p,N]
+		lista = [[0.6,15],[0.2,28],[0.1,100],[0.3,69],[0.73,27],[0.19,45]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		p = params[0]
+		N = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "MGF"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Suponga que $X$ es una variable aleatoria con función generadora de momentos dada por "
+
+		mgf = "$\ "+"frac{"+str(p)+"e^t}{1-"+str(1-p)+"e^t}$" 
+		mgf = mgf.replace(" ","")
+
+		pregunta += mgf+". ¿Cuáles son la media y la varianza de X?"+"\n"
+
+		muReal = 1/p
+		muError = N*p
+		sigmaReal = (1-p)/p**2
+		sigmaError = 1/p**2
+		
+		cifras = 3
+		if pos%2==0:
+			respuestas += "a. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+
+		elif pos%2==1:
+			respuestas += "a. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="*b. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas +="c. El valor esperado es "+str(round(muReal,cifras))+" y la varianza es "+str(round(sigmaError,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. El valor esperado es "+str(round(muError,cifras))+" y la varianza es "+str(round(sigmaReal,cifras))+"\n"
+
+		return [titulo, version, pregunta, respuestas]
+
+
+	elif i==49: 
+		#Función generadora de momentos Poisson
+		#[lambda, N]
+		lista = [[10,5],[5,7],[7,6],[0.11,1],[0.75,2],[0.19,1]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		l = params[0]
+		N = params[1]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "MGF"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Suponga que $X$ es una variable aleatoria con función generadora de momentos dada por "
+
+		mgf = "$e^{"+str(l)+"(e^t-1)}$" 
+		mgf = mgf.replace(" ","")
+
+		pregunta += mgf+". ¿Cuánto vale Pr$(X>"+str(N)+")$?"+"\n"
+
+		pReal = 1-poisson.cdf(N-1,l)
+		pError1 = 1-poisson.cdf(N,l)
+		pError2 = 1-poisson.cdf(N,1/l)
+		pError3 = 1-poisson.pmf(N-1,l)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*c. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError3,cifras))+"\n"
+
+		else:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
+
+	elif i==50:
+		#Función generadora de momentos hipergeométrica
+		#[p,r,N]
+		lista = [[0.6,10,5],[0.2,4,6],[0.1,7,7],[0.3,10,5],[0.73,4,4],[0.19,7,3]]
+		pos=rdm.randint(1,len(lista))			
+		params = lista[pos-1]
+		p = params[0]
+		r = params[1]
+		N = params[2]
+		titulo = ""
+		version = ""
+		pregunta = ""
+		respuestas = ""
+		titulo += "MGF"+"\n"
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		pregunta += "Suponga que $X$ es una variable aleatoria con función generadora de momentos dada por "
+
+		mgf = "$\ "+"left("+"\ "+"frac{"+str(p)+"}{1-"+str(1-p)+"e^t}"+"\ "+"right)^"+str(r)+"$" 
+		mgf = mgf.replace(" ","")
+
+		pregunta += mgf+". ¿Cuánto vale Pr$(X<"+str(N)+")$?"+"\n"
+
+		pReal = nbinom.cdf(N-1,r,p)
+		pError1 = geom.cdf(N-1,p)
+		pError2 = nbinom.cdf(N,r,1-p)
+		pError3 = binom.cdf(r,N-1,p)
+
+		cifras=5
+
+		if pos%2==0:
+			respuestas += "*a. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "b. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError3,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+
+		else:
+			respuestas += "a. "+str(round(pError2,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "*b. "+str(round(pReal,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "c. "+str(round(pError1,cifras))+"\n"
+			respuestas += " "+"\n"
+			respuestas += "d. "+str(round(pError2,cifras))+"\n"
+		
+		return [titulo, version, pregunta, respuestas]
+
 	#DeGroot & Schervish
 
 	#Section 5.2
@@ -2252,6 +2553,7 @@ def RandomProblemGenerator(i):
 #Sección 3.6 (Distribución binomial negativa) : 11-12, 41-42
 #Sección 3.7 (Distribución hipergeométrica) : 13-16
 #Sección 3.8 (Distribución de Poisson) : 17-20
+#Sección 3.9 (Funciones generadoras de momentos): 45-50
 
 #DeGroot & Schervish - Probability and Statistics 
 
@@ -2272,7 +2574,7 @@ def RandomProblemGenerator(i):
 
 
 #MANUAL
-ejercicios = [43,44]
+ejercicios = [45,46,50]
 
 
 
