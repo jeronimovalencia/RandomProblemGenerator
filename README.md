@@ -10,6 +10,6 @@ Es el archivo de Python que imprime, en formato .tex, las preguntas deseadas. En
 
 Este archivo Makefile compila el programa anterior con **python3**, su resultado lo envía a un archivo de texto que se compila con **pandoc** para generar el archivo .docx deseado. 
 
-###Tarea_.docx
+### Tarea_.docx
 
 Son ejemplos de tipos de archivo que genera el programa. 
