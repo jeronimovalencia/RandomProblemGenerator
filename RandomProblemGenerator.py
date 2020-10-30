@@ -1412,8 +1412,8 @@ def RandomProblemGenerator(i):
 		lista = [[0.5,7],[0.4,8],[0.6,10],[0.7,7],[0.3,8],[0.8,9]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pCara = params[0]
-		cantTiros = params[1]
+		pCara = rdm.randint(20,80)/100
+		cantTiros = rdm.randint(5,15)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1421,7 +1421,7 @@ def RandomProblemGenerator(i):
 		titulo += "Más caras que sellos"+"\n"
 		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"	
 
-		pregunta += "Una moneda con probabilidad de cara "+str(pCara)+" se lanza "+str(cantTiros)+" veces. ¿Cuál es la probabilidad de que salgan más caras que sellos?"+"\n"
+		pregunta += "Una moneda con probabilidad de cara "+str(round(pCara,3))+" se lanza "+str(cantTiros)+" veces. ¿Cuál es la probabilidad de que salgan más caras que sellos?"+"\n"
 
 		pReal = 0
 		pError1 = 0
@@ -1467,12 +1467,12 @@ def RandomProblemGenerator(i):
 		lista = [[0.3,10,0.4,5,0.6,3],[0.5,10,0.6,2,0.9,10],[0.6,4,0.3,10,0.7,2],[0.6,6,0.6,2,0.3,10]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pAcierto1 = params[0]
-		cantTiros1 = params[1]
-		pAcierto2 = params[2]
-		cantTiros2 = params[3]
-		pAcierto3 = params[4]
-		cantTiros3 = params[5]
+		pAcierto1 = rdm.randint(10,60)/100
+		cantTiros1 = rdm.randint(5,12)
+		pAcierto2 = rdm.randint(10,60)/100
+		cantTiros2 = rdm.randint(5,12)
+		pAcierto3 = rdm.randint(10,60)/100
+		cantTiros3 = rdm.randint(5,12)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1480,7 +1480,7 @@ def RandomProblemGenerator(i):
 		titulo += "Disparos con probabilidad"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Tres personas van a disparar a un objetivo. La primera persona disparará "+str(cantTiros1)+" veces y tiene probabilidad de acertar de "+str(pAcierto1)+". La segunda lo hará "+str(cantTiros2)+" veces y tiene probabilidad de acierto de "+str(pAcierto2)+"; y la tercera "+str(cantTiros3)+" veces y tiene probabilidad de dar en el blanco de "+str(pAcierto3)+". ¿Cuál es el valor esperado y la varianza del número de disparos que dan en el blanco? (Asuma que los disparos son independientes)"+"\n"
+		pregunta += "Tres personas van a disparar a un objetivo. La primera persona disparará "+str(cantTiros1)+" veces y tiene probabilidad de acertar de "+str(round(pAcierto1,3))+". La segunda lo hará "+str(cantTiros2)+" veces y tiene probabilidad de acierto de "+str(round(pAcierto2,3))+"; y la tercera "+str(cantTiros3)+" veces y tiene probabilidad de dar en el blanco de "+str(round(pAcierto3,3))+". ¿Cuál es el valor esperado y la varianza del número de disparos que dan en el blanco? (Asuma que los disparos son independientes)"+"\n"
 
 		muReal = pAcierto1*cantTiros1+pAcierto2*cantTiros2+pAcierto3*cantTiros3
 		sigmaReal = pAcierto1*cantTiros1*(1-pAcierto1)+pAcierto2*cantTiros2*(1-pAcierto2)+pAcierto3*cantTiros3*(1-pAcierto3)
@@ -1515,10 +1515,10 @@ def RandomProblemGenerator(i):
 		lista = [[0.1,2,3,10],[0.15,2,4,15],[0.2,3,4,12],[0.2,2,4,8],[0.3,2,3,10]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pFalla = params[0]
-		cant1 = params[1]
-		cant2 = params[2]
-		cantTotalComponentes = params[3]
+		pFalla = rdm.randint(20,40)/100
+		cant1 = rdm.randint(2,4)
+		cant2 = rdm.randint(5,8)
+		cantTotalComponentes = rdm.randint(9,12)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1526,7 +1526,7 @@ def RandomProblemGenerator(i):
 		titulo += "Fallo de componentes"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Un componente de un circuito falla con probabilidad "+str(pFalla)+". Si en total se tienen "+str(cantTotalComponentes)+" componentes independientes en un circuito en el cual se sabe que al menos "+str(cant1)+" han fallado, ¿cuál es la probabilidad de que fallen al menos "+str(cant2)+" en todo el circuito?"+"\n"
+		pregunta += "Un componente de un circuito falla con probabilidad "+str(round(pFalla,3))+". Si en total se tienen "+str(cantTotalComponentes)+" componentes independientes en un circuito en el cual se sabe que al menos "+str(cant1)+" han fallado, ¿cuál es la probabilidad de que fallen al menos "+str(cant2)+" en todo el circuito?"+"\n"
 
 		pReal = (1-binom.cdf(cant2-1,cantTotalComponentes,pFalla))/(1-binom.cdf(cant1-1,cantTotalComponentes,pFalla)) 
 		pError1 = binom.cdf(cant2-1,cantTotalComponentes,pFalla)
@@ -1561,10 +1561,10 @@ def RandomProblemGenerator(i):
 		lista = [[0.4,0.3,4,3],[0.5,0.6,3,4],[0.4,0.7,3,5],[0.6,0.3,4,3],[0.5,0.2,3,4],[0.4,0.3,2,5]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pRec1 = params[0]
-		pRec2 = params[1]
-		cantPacientes1 = params[2]
-		cantPacientes2 = params[3]
+		pRec1 = rdm.randint(40,60)/100
+		pRec2 = rdm.randint(30,50)/100
+		cantPacientes1 = rdm.randint(3,6)
+		cantPacientes2 = rdm.randint(4,7)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1621,10 +1621,10 @@ def RandomProblemGenerator(i):
 		lista = [[5,5,7,3,"azules"],[4,6,6,3,"rojas"],[7,11,7,4,"azules"],[8,6,5,3,"rojas"],[8,4,6,4,"azules"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		cantAzul = params[0]
-		cantRoja = params[1]
-		cantMuestra = params[2]
-		cantLim = params[3]
+		cantAzul = rdm.randint(6,10)
+		cantRoja = rdm.randint(6,10)
+		cantMuestra = rdm.randint(6,11)
+		cantLim = rdm.randint(3,5)
 		STRcolor = params[4]
 		titulo = ""
 		version = ""
@@ -1688,9 +1688,9 @@ def RandomProblemGenerator(i):
 		lista = [[16,14,10,"negros"],[20,10,15,"rojos"],[24,18,12,"negros"],[10,16,9,"rojos"],[7,23,13,"negros"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		cantRojos = params[0]
-		cantNegros = params[1]
-		cantMuestra = params[2]
+		cantRojos = rdm.randint(15,25)
+		cantNegros = rdm.randint(15,25)
+		cantMuestra = rdm.randint(10,20)
 		STRcolor = params[3]
 		titulo = ""
 		version = ""
@@ -1761,17 +1761,22 @@ def RandomProblemGenerator(i):
 		lista = [[2,10,15,2,"errores"],[4,20,15,2,"errores"],[3,20,18,1,"error"],[5,50,10,1,"error"],[8,10,12,2,"errores"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		promErrores = params[0]
-		unidadLongitud = params[1]
-		longitudMuestra = params[2]
-		cantMaximaErrores = params[3]
+		promErrores = rdm.randint(2,7)
+		unidadLongitud = rdm.randint(20,40)
+		longitudMuestra = rdm.randint(5,15)
+		cantMaximaErrores = rdm.randint(1,3)
 		STRerror = params[4]
 		titulo = ""
 		version = ""
 		pregunta = ""
 		respuestas = ""
 		titulo += "Imperfectos en una tela"+"\n"
-		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"		
+		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"	
+
+		if cantMaximaErrores>1: 
+			STRerror = "errores"
+		else: 
+			STRerror = "error"			
 
 		pregunta += "Una empresa textil posee una máquina que causa, en promedio, "+str(promErrores)+" imperfecciones en cada "+str(unidadLongitud)+" metros de tela. Si se toma un retazo de tela de "+str(longitudMuestra)+" metros, ¿cuál es la probabilidad de que esta muestra tenga menos de "+str(cantMaximaErrores)+" "+STRerror+"?"+"\n"
 
@@ -1808,9 +1813,9 @@ def RandomProblemGenerator(i):
 		lista = [[0.1,100,5],[0.05,200,7],[0.12,100,6],[0.11,100,8],[0.13,500,6],[0.09,100,7]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		proporcion = params[0]
-		tamMuestra = params[1]
-		cantLimite = params[2]
+		proporcion = rdm.randint(5,9)/100
+		tamMuestra = rdm.randint(8,15)*10
+		cantLimite = rdm.randint(3,12)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1818,7 +1823,7 @@ def RandomProblemGenerator(i):
 		titulo += "Árboles con frutos azules"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 		
-		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(proporcion)+". Si se observan los frutos de "+str(tamMuestra)+" árboles, ¿cuál es la probabilidad de que se encuentren más de "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
+		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(round(proporcion,3))+". Si se observan los frutos de "+str(tamMuestra)+" árboles, ¿cuál es la probabilidad de que se encuentren más de "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
 	
 		pReal = 1-poisson.cdf(cantLimite,proporcion*tamMuestra) 
 		pError1 = poisson.cdf(cantLimite,proporcion*tamMuestra)
@@ -1853,9 +1858,9 @@ def RandomProblemGenerator(i):
 		lista = [[2,10,15],[4,20,15],[3,20,18],[5,50,10],[8,10,12]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		promErrores = params[0]
-		unidadLongitud = params[1]
-		longitudMuestra = params[2]
+		promErrores = rdm.randint(2,8)
+		unidadLongitud = rdm.randint(8,15)
+		longitudMuestra = rdm.randint(10,20)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1866,9 +1871,9 @@ def RandomProblemGenerator(i):
 		pregunta += "Una empresa textil posee una máquina que causa, en promedio, "+str(promErrores)+" imperfecciones en cada "+str(unidadLongitud)+" metros de tela. Si se toma un retazo de "+str(longitudMuestra)+" metros generado por esta máquina, ¿cuántas imperfecciones esperaría ver?"+"\n"
 
 		cantReal = promErrores*(longitudMuestra/unidadLongitud)
-		cantError1 = promErrores*longitudMuestra
-		cantError2 = promErrores**2
-		cantError3 = cantReal**2-cantReal
+		cantError1 = 2*promErrores*longitudMuestra/unidadLongitud
+		cantError2 = promErrores*longitudMuestra
+		cantError3 = (cantReal**2-cantReal)/unidadLongitud
 
 		cifras=0
 		if pos%2==0:
@@ -1897,10 +1902,10 @@ def RandomProblemGenerator(i):
 		lista = [[12,10,15,25],[15,15,20,28],[10,8,12,20],[5,4,10,15],[8,10,12,19]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		promEntrada1 = params[0]
-		promEntrada2 = params[1]
-		cantMinimaPorHora = params[2]	
-		cantLimite = params[3]
+		promEntrada1 = rdm.randint(4,9)
+		promEntrada2 = rdm.randint(10,15)
+		cantMinimaPorHora = rdm.randint(10,15)	
+		cantLimite = rdm.randint(16,20)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1947,8 +1952,11 @@ def RandomProblemGenerator(i):
 		lista = [[0.7,5],[0.3,6],[0.6,10],[0.4,8],[0.75,10],[0.25,12]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pSello = params[0]
-		cantMaximaCaras = params[1]
+		pSello = 0.5
+		while pSello == 0.5:
+			pSello = rdm.randint(3,8)/10
+
+		cantMaximaCaras = rdm.randint(5,15)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -1956,7 +1964,7 @@ def RandomProblemGenerator(i):
 		titulo += "Lanzamiento de monedas"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(pSello)+" de obtener sello, ¿cuáles son el número esperado y la varianza de sellos que se obtendrán antes de obtener "+str(cantMaximaCaras)+" caras?"+"\n"
+		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(round(pSello,3))+" de obtener sello, ¿cuáles son el número esperado y la varianza de sellos que se obtendrán antes de obtener "+str(cantMaximaCaras)+" caras?"+"\n"
 	
 		p = 1-pSello
 		
@@ -1993,8 +2001,11 @@ def RandomProblemGenerator(i):
 		lista = [[0.7,5],[0.3,6],[0.6,10],[0.4,8],[0.75,10],[0.25,12]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pSello = params[0]
-		cantMaximaCaras = params[1]
+		pSello = 0.5
+		while pSello == 0.5:
+			pSello = rdm.randint(3,8)/10
+
+		cantMaximaCaras = rdm.randint(5,12)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2002,7 +2013,7 @@ def RandomProblemGenerator(i):
 		titulo += "Lanzamiento de monedas"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(pSello)+" de obtener sello, ¿cuáles son el número esperado y la varianza del número de lanzamientos necesarios para obtener "+str(cantMaximaCaras)+" caras?"+"\n"
+		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(round(pSello,3))+" de obtener sello, ¿cuáles son el número esperado y la varianza del número de lanzamientos necesarios para obtener "+str(cantMaximaCaras)+" caras?"+"\n"
 		
 		p = 1-pSello
 		muReal = cantMaximaCaras*(1-p)/p + cantMaximaCaras
@@ -2038,10 +2049,10 @@ def RandomProblemGenerator(i):
 		lista = [[0.4,10,15,12],[0.3,6,8,18],[0.6,10,10,13],[0.4,15,12,19],[0.7,10,8,15],[0.5,12,14,16]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pBlanca = params[0]
-		cantBlancas1 = params[1]
-		cantBlancas2 = params[2]
-		cantFinal = params[3]
+		pBlanca = rdm.randint(4,7)/10
+		cantBlancas1 = rdm.randint(5,10)
+		cantBlancas2 = rdm.randint(5,10)
+		cantFinal = rdm.randint(10,15)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2084,9 +2095,11 @@ def RandomProblemGenerator(i):
 		lista = [[0.4,10,15],[0.3,6,8],[0.6,10,10],[0.4,15,12],[0.7,10,8],[0.5,12,14]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pBlanca = params[0]
-		cantBlancas1 = params[1]
-		cantBlancas2 = params[2]
+		pBlanca=0.5
+		while pBlanca==0.5:
+			pBlanca = rdm.randint(3,8)/10
+		cantBlancas1 = rdm.randint(5,10)
+		cantBlancas2 = rdm.randint(5,12)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2132,10 +2145,10 @@ def RandomProblemGenerator(i):
 		lista = [[0.4,2,6,10, "una impresora"],[0.3,3,8,12, "un celular"],[0.6,2,6,10, "una máquina de escribir"],[0.4,3,7,11,"una guitarra"],[0.7,2,6,8,"un portafolios"],[0.5,3,5,6,"una computadora"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pFallo = params[0]
-		cantMinimaFallos = params[1]
-		cantFallos = params[2]
-		tamMuestra = params[3]
+		pFallo = rdm.randint(2,4)/10
+		cantMinimaFallos = rdm.randint(3,5)
+		cantFallos = rdm.randint(6,8)
+		tamMuestra = rdm.randint(12,16)
 		objeto = params[4]
 		titulo = ""
 		version = ""
@@ -2149,7 +2162,7 @@ def RandomProblemGenerator(i):
 		pReal = binom.pmf(cantFallos, tamMuestra, pFallo) / (1-binom.cdf(cantMinimaFallos-1,tamMuestra,pFallo))
 		pError1 = binom.pmf(cantFallos, tamMuestra, pFallo)
 		pError2 = binom.pmf(cantFallos, tamMuestra, pFallo) / (1-binom.cdf(cantMinimaFallos,tamMuestra,pFallo))
-		pError3 = binom.pmf(cantMinimaFallos, tamMuestra, pFallo) / (1-binom.cdf(cantFallos-1,tamMuestra,pFallo))
+		pError3 = binom.pmf(cantFallos, tamMuestra, 1-pFallo) / (1-binom.cdf(cantFallos-1,tamMuestra,1-pFallo))
 
 		cifras=5
 
@@ -2180,9 +2193,11 @@ def RandomProblemGenerator(i):
 		lista = [[0.4,20,10],[0.3,15,7],[0.5,8,3],[0.6,12,9],[0.7,15,9]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pRoja = params[0]
-		cantMuestra = params[1]
-		cantNegras = params[2]
+		pRoja=0.5
+		while pRoja==0.5:
+			pRoja = rdm.randint(3,7)/10
+		cantMuestra = rdm.randint(10,16)
+		cantNegras = rdm.randint(7,10)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2194,7 +2209,7 @@ def RandomProblemGenerator(i):
 	
 		
 		pReal = binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
-		pError1 = 1-binom.cdf(cantNegras-1,cantMuestra,pRoja)
+		pError1 = 1-binom.cdf(cantNegras-1,cantMuestra,1-pRoja)
 		pError2 = binom.cdf(cantNegras,cantMuestra,1-pRoja)
 		pError3 = 1-binom.cdf(cantNegras,cantMuestra,1-pRoja)
 		
@@ -2226,10 +2241,12 @@ def RandomProblemGenerator(i):
 		lista = [[0.4,20,10,30],[0.3,15,7,20],[0.5,8,3,16],[0.6,12,6,15],[0.7,15,8,20]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		pRoja = params[0]
-		cantMuestra = params[1]
-		cantNegras = params[2]
-		cantTotalFichas = params[3]
+		pRoja=0.5
+		while pRoja==0.5:
+			pRoja = rdm.randint(3,7)/10
+		cantMuestra = rdm.randint(8,12)
+		cantNegras = rdm.randint(3,6)
+		cantTotalFichas = rdm.randint(15,25)
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2270,12 +2287,12 @@ def RandomProblemGenerator(i):
 	elif i==38:
 		#Pelotas de colores (Variación): 5.3.2
 		#[Cantidad pelotas azules, cantidad pelotas rojas, cantidad muestra, cantidad limite, color pregunta]
-		lista = [[5,5,7,"azules"],[4,6,6,"rojas"],[7,11,7,"azules"],[8,6,5,"rojas"],[8,4,6,"azules"]]
+		lista = [[5,5,7,"azules"],[4,6,6,"rojas"],[7,11,7,"azules"],[8,6,5,"azules"],[8,4,6,"rojas"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		cantAzul = params[0]
-		cantRoja = params[1]
-		cantMuestra = params[2]
+		cantAzul = rdm.randint(8,15)
+		cantRoja = rdm.randint(10,20)
+		cantMuestra = rdm.randint(10,15)
 		STRcolor = params[3]
 		titulo = ""
 		version = ""
@@ -2304,9 +2321,9 @@ def RandomProblemGenerator(i):
 				respuestas += "d. "+str(round(cantRealAzul,cifras))+"\n"
 
 			else:
-				respuestas += "*a. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += "a. "+str(round(cantError2,cifras))+"\n"
 				respuestas += " "+"\n"
-				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
+				respuestas += "*b. "+str(round(cantRealRoja,cifras))+"\n"
 				respuestas += " "+"\n"
 				respuestas += "c. "+str(round(cantRealAzul,cifras))+"\n"
 				respuestas += " "+"\n"
@@ -2314,13 +2331,13 @@ def RandomProblemGenerator(i):
 
 		else: 
 			if pos%2==0:
-				respuestas += "*a. "+str(round(cantRealAzul,cifras))+"\n"
+				respuestas += "a. "+str(round(cantRealRoja,cifras))+"\n"
 				respuestas += " "+"\n"
 				respuestas += "b. "+str(round(cantError2,cifras))+"\n"
 				respuestas += " "+"\n"
 				respuestas += "c. "+str(round(cantError1,cifras))+"\n"
 				respuestas += " "+"\n"
-				respuestas += "d. "+str(round(cantRealRoja,cifras))+"\n"
+				respuestas += "*d. "+str(round(cantRealAzul,cifras))+"\n"
 
 			else:
 				respuestas += "a. "+str(round(cantRealRoja,cifras))+"\n"
@@ -2340,9 +2357,9 @@ def RandomProblemGenerator(i):
 		lista = [[12,10,3],[15,15,2],[10,8,4],[5,4,5],[8,10,3]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		promEntrada1 = params[0]
-		promEntrada2 = params[1]
-		cantHoras = params[2]	
+		promEntrada1 = rdm.randint(10,15)
+		promEntrada2 = rdm.randint(8,12)
+		cantHoras = rdm.randint(2,4)	
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2385,7 +2402,7 @@ def RandomProblemGenerator(i):
 		lista = [[11,"el valor esperado"],[105,"el valor esperado"],[7,"la varianza"],[59,"la varianza"],[306,"la varianza"],[10,"el valor esperado"],[74,"el valor esperado"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]	
-		N = params[0]
+		N = rdm.randint(15,75)
 		texto = params[1]
 		titulo = ""
 		version = ""
@@ -2429,9 +2446,9 @@ def RandomProblemGenerator(i):
 		lista = [[15,26,7,3,"azules"],[14,26,6,3,"rojas"],[17,11,7,4,"azules"],[28,16,5,3,"rojas"],[18,4,6,4,"azules"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		cantAzul = params[0]
-		cantRoja = params[1]
-		cantMuestra = params[2]
+		cantAzul = rdm.randint(10,30)
+		cantRoja = rdm.randint(15,25)
+		cantMuestra = rdm.randint(10,15)
 		cantLim = params[3]
 		STRcolor = params[4]
 		titulo = ""
@@ -2497,9 +2514,9 @@ def RandomProblemGenerator(i):
 		lista = [[0.1,100,50],[0.05,200,70],[0.12,100,60],[0.11,100,80],[0.13,500,6],[0.09,100,70]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		proporcion = params[0]
-		tamMuestra = params[1]
-		cantLimite = params[2]
+		proporcion = rdm.randint(5,15)/100
+		tamMuestra = rdm.randint(1,6)*50
+		cantLimite = rdm.randint(1,5)*10
 		titulo = ""
 		version = ""
 		pregunta = ""
@@ -2517,22 +2534,22 @@ def RandomProblemGenerator(i):
 		cifras=0
 
 		if pos%2==0:
-			respuestas += "*a. "+str(round(cantReal,cifras))+"\n"
+			respuestas += "*a. "+str(int(cantReal))+"\n"
 			respuestas += " "+"\n"
-			respuestas += "b. "+str(round(cantError3,cifras))+"\n"
+			respuestas += "b. "+str(int(cantError3))+"\n"
 			respuestas += " "+"\n"
-			respuestas += "c. "+str(round(cantError2,cifras))+"\n"
+			respuestas += "c. "+str(int(cantError2))+"\n"
 			respuestas += " "+"\n"
-			respuestas += "d. "+str(round(cantError1,cifras))+"\n"
+			respuestas += "d. "+str(int(cantError1))+"\n"
 
 		else:
-			respuestas += "a. "+str(round(cantError2,cifras))+"\n"
+			respuestas += "a. "+str(int(cantError2))+"\n"
 			respuestas += " "+"\n"
-			respuestas += "b. "+str(round(cantError1,cifras))+"\n"
+			respuestas += "b. "+str(int(cantError1))+"\n"
 			respuestas += " "+"\n"
-			respuestas += "c. "+str(round(cantError3,cifras))+"\n"
+			respuestas += "c. "+str(int(cantError3))+"\n"
 			respuestas += " "+"\n"
-			respuestas += "*d. "+str(round(cantReal,cifras))+"\n"
+			respuestas += "*d. "+str(int(cantReal))+"\n"
 		
 		return [titulo, version, pregunta, respuestas]	
 
@@ -2571,7 +2588,7 @@ def RandomProblemGenerator(i):
 
 
 #MANUAL
-ejercicios = [50]
+ejercicios = [44]
 
 cantidades = [30]
 
