@@ -8,6 +8,9 @@ from scipy.stats import hypergeom
 from scipy.stats import poisson
 from scipy.special import binom as bin_coeff
 
+def pmfNBINOM(p,y,r):
+	return bin_coeff(y-1,r-1)*p**r*(1-p)**(y-r)
+
 def RandomProblemGenerator(i):
 	#Seccion 3.3
 
@@ -125,6 +128,8 @@ def RandomProblemGenerator(i):
 		n1 = rdm.randint(2,25)
 		n2 = rdm.randint(5,30)
 		pCliente = rdm.randint(15,95)/100.0
+		while pCliente == 0.5:
+			pCliente = rdm.randint(15,95)/100.0
 		pVenta = rdm.randint(5,80)/100.0
 		precioVenta = rdm.randint(50,500)*100
 		stringPrecioVenta = "{:,}".format(precioVenta)
@@ -174,7 +179,7 @@ def RandomProblemGenerator(i):
 
 	elif i==4:
 		#Examen Opcion Multiple : 3.41
-		lista=[8,10,12,14,16,18,20,22,24]
+		lista=[12,14,16,18,20,22,24,26,28,30]
 		pos=rdm.randint(1,len(lista))				
 		cant=lista[pos-1]
 		titulo = ""
@@ -233,7 +238,7 @@ def RandomProblemGenerator(i):
 		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
 		precio = rdm.randint(1,5)*100
 		dev = rdm.randint(10,20)/10
-		#Esto podría variarse
+		#Esto podría variarse3
 		p = 0.05
 		pregunta += str(cantProductos)+" "+str(params[0])+" se van a vender en un almacen a \$"+str(precio)+" cada uno. El almacen tiene una política de devolución de "+str(dev)+" veces el valor pagado en caso que el producto esté defectuoso. Uno de los "+str(params[0])+" tiene un defecto con probabilidad "+str(p)+". La ganancia neta esperada por el almacen tras vender todos los productos es"+"\n"
 
@@ -564,7 +569,7 @@ def RandomProblemGenerator(i):
 		cantReal = cant/p
 		cantError1 = 1/p 
 		cantError2 = cant/p**2
-		cantError3 = p*cant
+		cantError3 = 50*p*cant
 
 		cifras=0
 		if pos%2==0:
@@ -833,11 +838,11 @@ def RandomProblemGenerator(i):
 		titulo += "Apostador"+"\n"
 		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino. Para entrar al juego debe pagar \$"+str(costoEntrada)+" y en caso de ganar recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es la probabilidad que, tras ganar "+str(cantGanadas)+" veces en este juego, salga con \$"+str(dineroFinal)+" del casino?"+"\n"
+		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino. Para entrar al juego debe pagar \$"+str(costoEntrada)+" y en caso de ganar recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+"y sale del casino justo después de ganar "+str(cantGanadas)+" veces, ¿cuál es la probabilidad que salga con \$"+str(dineroFinal)+" del casino?"+"\n"
 
 		fallos = (cantGanadas*(ganancia-costoEntrada)+dineroInicial-dineroFinal)/costoEntrada
 
-		pReal = nbinom.pmf(int(fallos),cantGanadas,pGanar)
+		pReal = pmfNBINOM(pGanar, fallos+cantGanadas ,cantGanadas)
 		pError1 = nbinom.pmf(int((cantGanadas*ganancia)/costoEntrada), cantGanadas, pGanar)
 		pError2 = nbinom.pmf(int((cantGanadas*ganancia+dineroInicial-dineroFinal)/costoEntrada),cantGanadas,pGanar)
 		pError3 = nbinom.cdf(int(fallos), cantGanadas, pGanar)
@@ -886,7 +891,7 @@ def RandomProblemGenerator(i):
 		titulo += "Apostador"+"\n"
 		version += "%Jeronimo Valencia, Tipo 0"+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino y en caso de hacerlo recibe \$"+str(ganancia)+". Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es el mínimo de rondas que debe jugar para esperar salir con \$"+str(dineroFinal)+" del casino?"+"\n"
+		pregunta += "Un apostador tiene una probabilidad de "+str(pGanar)+" de ganar en cierto juego de casino y en caso de hacerlo recibe \$"+str(ganancia)+". Suponga que el jugador no pierde dinero para entrar al juego ya que se lo presta un amigo. Si el apostador inicia con \$"+str(dineroInicial)+", ¿cuál es el mínimo de rondas que debe jugar para esperar salir con \$"+str(dineroFinal)+" del casino?"+"\n"
 
 
 		cantReal = (int((dineroFinal-dineroInicial)/ganancia))/pGanar
@@ -1322,12 +1327,12 @@ def RandomProblemGenerator(i):
 		mgf = "$e^{"+str(l)+"(e^t-1)}$" 
 		mgf = mgf.replace(" ","")
 
-		pregunta += mgf+". ¿Cuánto vale Pr$(X>"+str(N)+")$?"+"\n"
+		pregunta += mgf+". ¿Cuánto vale Pr$(X>"+str(N+1)+")$?"+"\n"
 
 		pReal = 1-poisson.cdf(N-1,l)
 		pError1 = 1-poisson.cdf(N,l)
 		pError2 = 1-poisson.cdf(N,1/l)
-		pError3 = 1-poisson.pmf(N-1,l)
+		pError3 = 1-poisson.pmf(N,1/l)
 
 		cifras=5
 
@@ -1353,7 +1358,7 @@ def RandomProblemGenerator(i):
 
 
 	elif i==50:
-		#Función generadora de momentos hipergeométrica
+		#Función generadora de momentos binomial negativa
 		#[p,r,N]
 		lista = [[0.6,10,5],[0.2,4,6],[0.1,7,7],[0.3,10,5],[0.73,4,4],[0.19,7,3]]
 		pos=rdm.randint(1,len(lista))			
@@ -1823,7 +1828,7 @@ def RandomProblemGenerator(i):
 		titulo += "Árboles con frutos azules"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 		
-		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(round(proporcion,3))+". Si se observan los frutos de "+str(tamMuestra)+" árboles, ¿cuál es la probabilidad de que se encuentren más de "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
+		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(round(proporcion,3))+", aunque en cada arbol pueden crecer múltiples frutos azules. Si se observan los frutos de "+str(tamMuestra)+" árboles, ¿cuál es la probabilidad de que se encuentren más de "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
 	
 		pReal = 1-poisson.cdf(cantLimite,proporcion*tamMuestra) 
 		pError1 = poisson.cdf(cantLimite,proporcion*tamMuestra)
@@ -1875,7 +1880,7 @@ def RandomProblemGenerator(i):
 		cantError2 = promErrores*longitudMuestra
 		cantError3 = (cantReal**2-cantReal)/unidadLongitud
 
-		cifras=0
+		cifras=2
 		if pos%2==0:
 			respuestas += "a. "+str(int(round(cantError2,cifras)))+"\n"
 			respuestas += " "+"\n"
@@ -1964,11 +1969,11 @@ def RandomProblemGenerator(i):
 		titulo += "Lanzamiento de monedas"+"\n"
 		version += "%Jeronimo Valencia, Tipo "+str(i)+", ver 0"+str(pos)+"\n"
 
-		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(round(pSello,3))+" de obtener sello, ¿cuáles son el número esperado y la varianza de sellos que se obtendrán antes de obtener "+str(cantMaximaCaras)+" caras?"+"\n"
+		pregunta += "Si se hacen lanzamientos independientes de una moneda con probabilidad "+str(round(pSello,3))+" de obtener sello, ¿cuáles son el número esperado y la varianza de lanzamientos antes de obtener "+str(cantMaximaCaras)+" caras?"+"\n"
 	
 		p = 1-pSello
 		
-		muReal = cantMaximaCaras*(1-p)/p
+		muReal = cantMaximaCaras/(p)
 		muError = cantMaximaCaras*(1-pSello)/pSello
 		sigmaReal = cantMaximaCaras*(1-p)/p**2
 		sigmaError = cantMaximaCaras*(1-pSello)/pSello**2
@@ -2290,9 +2295,9 @@ def RandomProblemGenerator(i):
 		lista = [[5,5,7,"azules"],[4,6,6,"rojas"],[7,11,7,"azules"],[8,6,5,"azules"],[8,4,6,"rojas"]]
 		pos=rdm.randint(1,len(lista))			
 		params = lista[pos-1]
-		cantAzul = rdm.randint(8,15)
-		cantRoja = rdm.randint(10,20)
-		cantMuestra = rdm.randint(10,15)
+		cantAzul = rdm.randint(8,14)
+		cantRoja = rdm.randint(15,20)
+		cantMuestra = rdm.randint(12,18)
 		STRcolor = params[3]
 		titulo = ""
 		version = ""
@@ -2527,7 +2532,7 @@ def RandomProblemGenerator(i):
 		pregunta += "En un bosque, la proporción de árboles que dan un fruto azul es de "+str(proporcion)+". ¿Cuántos árboles hay que analizar si se quieren encontrar "+str(cantLimite)+" árboles con este tipo de fruto?"+"\n"
 	
 		cantReal = cantLimite/proporcion
-		cantError1 = 100*cantLimite*proporcion
+		cantError1 = 112*cantLimite*proporcion
 		cantError2 = cantLimite/((proporcion)**2)
 		cantError3 = cantLimite/(1-proporcion)
 
@@ -2588,11 +2593,13 @@ def RandomProblemGenerator(i):
 
 
 #MANUAL
-ejercicios = [44]
+ejercicios = [3,6,8,11,12,14,41,42,18,45,46,47,48,49,50,28,29,31,38,44]
 
-cantidades = [30]
+#cantidades = [30]
 
-#cantidades = [0,0,1]
+#cantidades = [33,34,33]
+cantidades = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+
 
 #Escribir documento en .tex
 
